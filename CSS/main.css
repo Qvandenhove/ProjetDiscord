@@ -1,3 +1,29 @@
 .row{
     margin: 0;
 }
+
+.form-row{
+    margin : 10px 0;
+}
+
+html, body{
+    height: 100%;
+}
+
+.formConnexion{
+    height: 89%;
+}
+
+.form-control{
+    width: 500px;
+    height: 500px;
+    background-color: #9CD1EB;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+header{
+    background-color: #9CD1EB;
+}
