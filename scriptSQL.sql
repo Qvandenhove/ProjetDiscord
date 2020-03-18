@@ -1,35 +1,174 @@
-DROP TABLE IF EXISTS Utilisateur ;
-CREATE TABLE Utilisateur (id_utilisateur INT AUTO_INCREMENT NOT NULL,
-nom_Utilisateur VARCHAR(50),
-prenom_Utilisateur VARCHAR(50),
-mail_Utilisateur VARCHAR(500),
-mdp_Utilisateur VARCHAR(1000),
-PRIMARY KEY (id_utilisateur)) ENGINE=InnoDB;
+-- phpMyAdmin SQL Dump
+-- version 4.9.2
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le :  mer. 18 mars 2020 à 14:40
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
-DROP TABLE IF EXISTS salle_chat ;
-CREATE TABLE salle_chat (id_salle INT AUTO_INCREMENT NOT NULL,
-message_salle VARCHAR(500),
-PRIMARY KEY (id_salle)) ENGINE=InnoDB;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-DROP TABLE IF EXISTS classe ;
-CREATE TABLE classe (id_classe INT AUTO_INCREMENT NOT NULL,
-niveau_classe VARCHAR(50),
-PRIMARY KEY (id_Classe)) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS Communique ;
-CREATE TABLE Communique (id_utilisateur INT AUTO_INCREMENT NOT NULL,
-id_salle INT NOT NULL,
-PRIMARY KEY (id_utilisateur,
- id_salle)) ENGINE=InnoDB;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-DROP TABLE IF EXISTS Appartient ;
-CREATE TABLE Appartient (id_utilisateur INT AUTO_INCREMENT NOT NULL,
-id_classe INT NOT NULL,
-PRIMARY KEY (id_utilisateur,
- id_classe)) ENGINE=InnoDB;
+--
+-- Base de données :  `discord`
+--
 
-ALTER TABLE Communique ADD CONSTRAINT FK_Communique_id_utilisateur_Utilisateur FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur (id_utilisateur);
+-- --------------------------------------------------------
 
-ALTER TABLE Communique ADD CONSTRAINT FK_Communique_id_salle_salle_chat FOREIGN KEY (id_salle) REFERENCES salle_chat (id_salle);
-ALTER TABLE Appartient ADD CONSTRAINT FK_Appartient_id_utilisateur_Utilisateur FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur (id_utilisateur);
-ALTER TABLE Appartient ADD CONSTRAINT FK_Appartient_id_Classe FOREIGN KEY (id_classe) REFERENCES Classe (id_classe);
+--
+-- Structure de la table `appartient`
+--
+
+CREATE TABLE `appartient` (
+  `utilisateur` int(11) NOT NULL,
+  `classe` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `classe`
+--
+
+CREATE TABLE `classe` (
+  `id_classe` int(11) NOT NULL,
+  `niveau_classe` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `communique`
+--
+
+CREATE TABLE `communique` (
+  `utilisateur` int(11) NOT NULL,
+  `salle` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `salle_chat`
+--
+
+CREATE TABLE `salle_chat` (
+  `id` int(11) NOT NULL,
+  `message` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `utilisateur`
+--
+
+CREATE TABLE `utilisateur` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(50) DEFAULT NULL,
+  `prenom` varchar(50) DEFAULT NULL,
+  `mail` varchar(500) DEFAULT NULL,
+  `mdp` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `appartient`
+--
+ALTER TABLE `appartient`
+  ADD PRIMARY KEY (`utilisateur`,`classe`),
+  ADD KEY `FK_Appartient_id_Classe` (`classe`);
+
+--
+-- Index pour la table `classe`
+--
+ALTER TABLE `classe`
+  ADD PRIMARY KEY (`id_classe`);
+
+--
+-- Index pour la table `communique`
+--
+ALTER TABLE `communique`
+  ADD PRIMARY KEY (`utilisateur`,`salle`),
+  ADD KEY `FK_Communique_id_salle_salle_chat` (`salle`);
+
+--
+-- Index pour la table `salle_chat`
+--
+ALTER TABLE `salle_chat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `appartient`
+--
+ALTER TABLE `appartient`
+  MODIFY `utilisateur` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `classe`
+--
+ALTER TABLE `classe`
+  MODIFY `id_classe` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `communique`
+--
+ALTER TABLE `communique`
+  MODIFY `utilisateur` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `salle_chat`
+--
+ALTER TABLE `salle_chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `appartient`
+--
+ALTER TABLE `appartient`
+  ADD CONSTRAINT `FK_Appartient_id_Classe` FOREIGN KEY (`classe`) REFERENCES `classe` (`id_classe`),
+  ADD CONSTRAINT `FK_Appartient_id_utilisateur_Utilisateur` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `communique`
+--
+ALTER TABLE `communique`
+  ADD CONSTRAINT `FK_Communique_id_salle_salle_chat` FOREIGN KEY (`salle`) REFERENCES `salle_chat` (`id`),
+  ADD CONSTRAINT `FK_Communique_id_utilisateur_Utilisateur` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
