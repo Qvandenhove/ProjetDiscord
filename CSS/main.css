@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+.container{
+    height: 75%;
+}
+
 .form-row{
     margin : 10px 0;
 }
@@ -11,19 +15,68 @@ html, body{
 }
 
 .formConnexion{
-    height: 89%;
+    height: 80%;
 }
 
-.form-control{
-    width: 500px;
+form{
     height: 500px;
     background-color: #9CD1EB;
+    margin-bottom: 100px;
+    border-radius: 10px;
+    padding: 0 100px;
+}
+
+.form-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input{
+    width: 40%;
 }
 
 .hidden{
     visibility: hidden;
 }
 
-header{
+header, footer{
+    height: 10%;
     background-color: #9CD1EB;
+}
+
+header{
+    height: 100px;
+}
+
+.menu{
+    height: 100%;
+}
+
+.profil{
+    height: 100%;
+}
+
+.disconnect{
+    margin-top: 40px;
+}
+
+.dropdown-item.disconnect{
+    color: red;
+    font-weight: bold;
+    margin: 0;
+}
+
+.messageBienvenue{
+    height: 80%;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.alert-danger{
+    margin-top: 1px;
 }
