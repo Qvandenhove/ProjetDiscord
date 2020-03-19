@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 18 mars 2020 à 14:40
+-- Généré le :  jeu. 19 mars 2020 à 15:11
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -77,8 +77,19 @@ CREATE TABLE `utilisateur` (
   `nom` varchar(50) DEFAULT NULL,
   `prenom` varchar(50) DEFAULT NULL,
   `mail` varchar(500) DEFAULT NULL,
+  `est_admin` tinyint(1) NOT NULL,
+  `est_professeur` tinyint(1) NOT NULL,
   `mdp` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `est_admin`, `est_professeur`, `mdp`) VALUES
+(1, 'Vandenhove', 'Quentin', 'quentin.vandenhove@viacesi.fr', 1, 0, '$2y$10$gTo4BhapgNxaVzqfmg7vnO/EzBIFB97NdQ7tSvscfsjztiu3GhqGe'),
+(2, 'Andrieu', 'Quentin', 'quentin.andrieu1@vaicesi.fr', 1, 0, '$2y$10$PS7J0fz7DB/662q0DrjkFOIZs/EOmXA/Vf/ffoqY.MOUoq6vudDMe'),
+(6, 'Caflers', 'Frédéric', 'fcaflers@cesi.fr', 0, 1, '$2y$10$bqrX5qZMYrP39IASAzqszu3iQBuUeXjBTJyNpsdwZUvhX7LoOfKfu');
 
 --
 -- Index pour les tables déchargées
@@ -148,7 +159,7 @@ ALTER TABLE `salle_chat`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Contraintes pour les tables déchargées
