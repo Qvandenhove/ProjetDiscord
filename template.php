@@ -17,7 +17,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class = "dropdown-item" href="ajouterUtilisateur.php">Utilisateur</a>
-                    <a class = "dropdown-item" href="#">Classe</a>
+                    <a class = "dropdown-item" href="addClass.php">Classe</a>
                 </div>
             </div>
                 <div class = "dropdown"><a href="#" class = "btn btn-info">Gestion</a></div>

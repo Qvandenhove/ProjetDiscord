@@ -14,7 +14,8 @@ ob_start();
     </div>
     <?php elseif (isset($_GET['ajout']) and $_GET['ajout'] == 'succes'): ?>
     <div class="row">
-        <div class="col-12 alert alert-success">L'utilisateur à bien été ajouté</div>
+        <?php $type = $_GET['type'] == 'classe' ? 'La classe ' : 'L\'utilisateur '?>
+        <div class="col-12 alert alert-success"><?= $type?>à bien été ajouté</div>
     </div>
     <?php endif; ?>
 </div>

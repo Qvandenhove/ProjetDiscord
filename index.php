@@ -14,13 +14,13 @@ if(!empty($_SESSION)){
                     <input class = "form-control" placeholder = "Votre mail" type="email" name = "mail" id = "mail">
                 </div>
                 <div class="row d-flex justify-content-center">
-                    <div class="col-6 text-center alert alert-danger hidden" id = "erreurMail">Merci de remplir ce champ</div>
+                    <div class="col-12 text-center alert alert-danger hidden" id = "mailVide">Merci de remplir ce champ</div>
                 </div>
                 <div class="form-row d-column-flex justify-content-center align-items-center">
                     <input class = "form-control" placeholder="Mot de passe" type="password" name = "pass" id ="pass">
                 </div>
                 <div class="row d-flex justify-content-center">
-                    <div class="col-6 text-center alert alert-danger hidden" id = "erreurPass">Merci de remplir ce champ</div>
+                    <div class="col-12 text-center alert alert-danger hidden" id = "passVide">Merci de remplir ce champ</div>
                 </div>
                 <div class="form-row d-column-flex justify-content-center align-items-center">
                     <input type="submit" class = "btn btn-dark">
@@ -29,7 +29,7 @@ if(!empty($_SESSION)){
         </div>
     </div>
 </div>
-<script src="JS/connexion.js"></script>
+<script src="JS/formulaire.js"></script>
 <?php
 $content = ob_get_clean();
 require('template.php');

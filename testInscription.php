@@ -23,8 +23,8 @@ $success = $addReq->execute(array(
 ));
 
 if($success){
-    header('Location: pageUtilisateur.php?ajout=succes');
+    header('Location: pageUtilisateur.php?ajout=succes&type=user');
 }else{
-    header('Location: pageUtilisateur.php?ajout=echec');
+    header('Location: pageUtilisateur.php?ajout=echec&type=user');
 }
 

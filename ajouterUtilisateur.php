@@ -34,7 +34,7 @@ ob_start();
         </div>
         <input type="submit" class = "btn btn-primary text-center">
     </form>
-    <script src="JS/ajouterUtilisateur.js"></script>
+    <script src="JS/formulaire.js"></script>
 </div>
 
 
