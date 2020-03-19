@@ -1,8 +1,6 @@
 let formulaire = document.querySelector('form');
 let nomChamps = ['mail', 'mot de passe'];
 
-let request = new XMLHttpRequest();
-
 formulaire.addEventListener('submit',function(event){
     event.preventDefault();
     let errors = [];
@@ -30,7 +28,3 @@ formulaire.addEventListener('submit',function(event){
     }
 
 });
-
-function send(url,content){
-
-}
