@@ -1,10 +1,9 @@
 <?php
 session_start();
 ob_start();
+$stylesheets = ['formulaire'];
 ?>
-    <div class="container formConnexion d-flex align-items-center justify-content-center">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col">
+            <div class="col-6">
                 <form action="testClasse.php" method="post" class="d-flex flex-column justify-content-center">
                     <div class="form-row d-flex justify-content-center">
                         <input type="text" name = "nomClasse" class="form-control" placeholder="Nom de la classe">
@@ -17,8 +16,6 @@ ob_start();
                     <input type="submit" class = "btn btn-primary">
                 </form>
             </div>
-        </div>
-    </div>
     <script src = "JS/formulaire.js"></script>
 
 <?php

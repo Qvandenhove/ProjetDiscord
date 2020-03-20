@@ -1,13 +1,12 @@
 <?php
 session_start();
 ob_start();
+$stylesheets = ['formulaire'];
 if(!empty($_SESSION)){
     session_destroy();
 }
 ?>
 
-<div class="container formConnexion d-flex align-items-center justify-content-center">
-    <div class="row d-flex justify-content-center align-items-center">
         <div class="col">
             <form action="testConnexion.php" method="post" class="d-flex flex-column justify-content-center">
                 <div class="form-row d-column-flex justify-content-center align-items-center">
@@ -27,8 +26,6 @@ if(!empty($_SESSION)){
                 </div>
             </form>
         </div>
-    </div>
-</div>
 <script src="JS/formulaire.js"></script>
 <?php
 $content = ob_get_clean();
