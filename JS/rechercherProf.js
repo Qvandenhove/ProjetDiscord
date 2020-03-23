@@ -17,19 +17,16 @@ formulaire.addEventListener('submit',function(e){
         document.querySelector('#nomProfesseurVide').classList.add('hidden');
         let request = new XMLHttpRequest();
         request.onreadystatechange = function(){
+            console.log(this.status);
             if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
                 let resultat = JSON.parse(this.responseText);
                 for(professeur in resultat){
-                    tableauResultat.innerHTML = teteTableau + '<tr><td>' + resultat[professeur][1] + '</td><td>' + resultat[professeur][2] + '</td><td>' + resultat[professeur][3] + '</td><td class = "text-center"><a href="choisirClasse.php?idProf=' + resultat[professeur][0] + '" class = "btn btn-primary">Ajouter à une classe</a></td></tr>'
+                    tableauResultat.innerHTML = teteTableau + '<tr><td>' + resultat[professeur][1] + '</td><td>' + resultat[professeur][2] + '</td><td>' + resultat[professeur][3] + '</td><td class = "text-center"><a href="index.php?action=chooseClass&idProf=' + resultat[professeur][0] + '" class = "btn btn-primary">Ajouter à une classe</a></td></tr>'
                 }
-
-
-
-
             }
         };
         let data = {nom : champs[0].value};
-        request.open("POST",'http://localhost/DiscordChat/getProfs.php');
+        request.open("POST",'http://localhost/DiscordChat/index.php?action=getProfs');
         request.setRequestHeader('Content-Type','application/json');
         request.send(JSON.stringify(data));
     }else{
@@ -38,4 +35,4 @@ formulaire.addEventListener('submit',function(e){
             document.querySelector(popup).classList.remove('hidden');
         })
     }
-})
+});

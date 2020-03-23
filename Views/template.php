@@ -16,17 +16,17 @@
         <div class="col-3 d-flex flex-inline align-items-end menu">
             <?php if(!empty($_SESSION)): ?>
             <div class="dropdown">
-                <a href="pageUtilisateur.php" class="btn btn-info">Accueil</a>
+                <a href="index.php?action=connected" class="btn btn-info">Accueil</a>
                 <a class="btn btn-info dropdown-toggle" href = "" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 5px">
                     Ajouter
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
 
-                    <a class = "dropdown-item" href="ajouterUtilisateur.php">Utilisateur</a>
-                    <a class = "dropdown-item" href="addClass.php">Classe</a>
+                    <a class = "dropdown-item" href="index.php?action=subscribeForm">Utilisateur</a>
+                    <a class = "dropdown-item" href="index.php?action=addClassForm">Classe</a>
                 </div>
             </div>
-                <div class = "dropdown"><a href="gererProf.php" class = "btn btn-info">Gestion</a></div>
+                <div class = "dropdown"><a href="index.php?action=searchTeachersForm" class = "btn btn-info">Gestion</a></div>
             <?php endif;?>
         </div>
         <div class="col-6 text-center">

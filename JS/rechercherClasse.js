@@ -20,12 +20,12 @@ formulaire.addEventListener('submit',function(e){
                 let resultat = JSON.parse(this.responseText);
 
                 for(classe in resultat){
-                    tableauResultat.innerHTML = teteTableau + '<tr><td>' + resultat[classe]['nom_classe'] + '</td><td>' + resultat[classe][2] + '</td><td class = "text-center"><a href="implanterProf.php?idProf=' + document.location.href.split("=")[1].toString() +'&idClasse=' + resultat[classe]["id_classe"] + '" class = "btn btn-primary">Choisir cette classe</a></td></tr>'
+                    tableauResultat.innerHTML = teteTableau + '<tr><td>' + resultat[classe]['nom_classe'] + '</td><td>' + resultat[classe][2] + '</td><td class = "text-center"><a href="index.php?action=implantTeacher&idProf=' + document.location.href.split("=")[2].toString() +'&idClasse=' + resultat[classe]["id_classe"] + '" class = "btn btn-primary">Choisir cette classe</a></td></tr>'
                 }
             }
         };
         let data = {nomClasse : champs[0].value, niveauClasse : champs[1].value};
-        request.open("POST",'http://localhost/DiscordChat/getClasses.php');
+        request.open("POST",'http://localhost/DiscordChat/index.php?action=getClasses');
         request.setRequestHeader('Content-Type','application/json');
         request.send(JSON.stringify(data));
     }else{
