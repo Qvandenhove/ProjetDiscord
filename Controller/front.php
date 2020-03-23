@@ -16,9 +16,13 @@ function addClassForm(){
 }
 
 function searchTeachersForm(){
-    require('Views/gererProf.php');
+    require('Views/manageUser.php');
 }
 
 function searchClassesForm(){
     require('Views/choisirClasse.php');
+}
+
+function chat(){
+    require('Views/chat.php');
 }

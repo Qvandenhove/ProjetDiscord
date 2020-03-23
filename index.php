@@ -13,9 +13,6 @@ switch($action){
     case 'connection':
         connectUser();
         break;
-    case 'myPage':
-        home();
-        break;
 
     case 'addClassForm':
         addClassForm();
@@ -24,11 +21,11 @@ switch($action){
         addClass();
         break;
 
-    case 'searchTeachersForm':
+    case 'searchUsersForm':
         searchTeachersForm();
         break;
-    case 'getProfs':
-        getProfs();
+    case 'getUsers':
+        getUsers();
         break;
     case 'chooseClass':
         searchClassesForm();
@@ -40,6 +37,23 @@ switch($action){
         implantTeacher();
         break;
 
+    case 'disconnect':
+        disconnect();
+        break;
+
+    case 'chat':
+        chat();
+        break;
+    case 'postMessage':
+        postMessage();
+        break;
+    case 'getMessages':
+        getMessage();
+        break;
     default:
-        connectionForm();
+        if(!empty($_SESSION)){
+            home();
+        }else{
+            connectionForm();
+        }
 }

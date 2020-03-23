@@ -2,7 +2,6 @@
 
 
 namespace CESI\ProjetDiscord;
-require('Models/Manager.php');
 
 class UserManager extends Manager
 {
@@ -40,69 +39,48 @@ class UserManager extends Manager
         $userReq->execute(array(':mail' => $_POST['mail']));
         $user = $userReq->fetch();
         if (password_verify($_POST['pass'],$user['mdp'])){
+            $_SESSION['id'] = intval($user['id']);
             $_SESSION['nom'] = $user['nom'];
             $_SESSION['prenom'] = $user['prenom'];
             if($user['est_admin']){
-                $_SESSION['role'] = 'admin';
+                $_SESSION['role'] = 2;
             }elseif ($user['est_professeur']){
-                $_SESSION['role'] = 'professeur';
+                $_SESSION['role'] = 1;
             }else{
-                $_SESSION['role'] = 'élève';
+                $_SESSION['role'] = 0;
             }
             header('Location: index.php?action=myPage');
         }else{
-            echo'Mauvais identifiants.';
+            header('Location: index.php?error=wrongLog');
         }
     }
-
-    public function searchTeacher(){
+    public function searchUsers(){
         $data = file_get_contents('php://input');
         $data = json_decode($data,true);
+        $searchUsers = $this->db->prepare('SELECT id,nom,prenom,mail FROM utilisateur WHERE est_professeur = :teacher AND est_admin = false AND prenom LIKE :nom');
 
-        $rechercheProf = $this->db->prepare('SELECT id,nom,prenom,mail FROM utilisateur WHERE est_professeur = true AND nom LIKE :nom');
-
-        $rechercheProf->execute(array(':nom' => '%'.$data['nom'].'%'));
-        $professeurs = [];
+        $searchUsers->execute(array(':nom' => '%'.$data['nom'].'%', ':teacher' => $data['isTeacher']));
+        $users = [];
         $count = 1;
-        while ($professeur = $rechercheProf->fetch()){
+        while ($user = $searchUsers->fetch()){
             for($i = 0; $i <= 3;$i ++){
-                unset($professeur[strval($i)]);
+                unset($user[strval($i)]);
             }
-            sort($professeur);
-            $professeurs['professeur'.strval($count)] = $professeur;
+            sort($user);
+            $users['professeur'.strval($count)] = $user;
             $count++;
         }
 
-        echo json_encode($professeurs,JSON_UNESCAPED_UNICODE);
+        echo json_encode($users,JSON_UNESCAPED_UNICODE);
     }
 
-    public function searchClasses(){
-        $data = file_get_contents('php://input');
-        $data = json_decode($data,true);
 
-        $rechercheClasses = $this->db->prepare('SELECT * FROM classe WHERE nom_classe LIKE :nom AND niveau_classe LIKE :niveau');
-        $rechercheClasses->execute(array(
-            ':nom' => '%'.$data['nomClasse'].'%',
-            ':niveau' => '%'.$data['niveauClasse'].'%'
-        ));
-        $classes = [];
-        $count = 1;
-        while ($classe = $rechercheClasses->fetch()){
-            for($i = 0; $i <= 1;$i ++){
-                unset($classe[$i]);
-            }
-            sort($classes);
-            $classes['classe'.strval($count)] = $classe;
-            $count++;
-        }
-        echo json_encode($classes,JSON_UNESCAPED_UNICODE);
-    }
 
     public function implantTeacher(){
         $implanterProf = $this->db->prepare('INSERT INTO appartient VALUES (:prof,:classe)');
         $success = $implanterProf->execute(array(
-            ':prof' => $_GET['idProf'],
-            ':classe' => $_GET['idClasse']
+            ':prof' => $_GET['userId'],
+            ':classe' => $_GET['classId']
         ));
 
         if($success){
@@ -110,5 +88,10 @@ class UserManager extends Manager
         }else{
             header('Location: index.php?action=myPage&ajout=echec');
         }
+    }
+
+    public function disconnect(){
+        session_destroy();
+        header('Location:index.php');
     }
 }

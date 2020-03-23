@@ -5,6 +5,7 @@
 
 .container{
     height: 75%;
+    min-width: 100%;
 }
 
 .form-row{
@@ -54,4 +55,8 @@ footer{
 
 .alert-danger{
     margin-top: 1px;
+}
+
+.lienMenu{
+    margin-right: 5px;
 }
