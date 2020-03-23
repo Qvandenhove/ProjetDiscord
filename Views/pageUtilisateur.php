@@ -1,8 +1,8 @@
 <?php
-session_start();
 ob_start();
+$stylesheets = []
 ?>
-<div class="container messageBienvenue d-flex flex-column align-items-center justify-content-center">
+
     <div class="row">
         <div class="col-12 text-center">
             <h1>Bonjour <?=$_SESSION['role'] ?></h1>
@@ -14,10 +14,21 @@ ob_start();
     </div>
     <?php elseif (isset($_GET['ajout']) and $_GET['ajout'] == 'succes'): ?>
     <div class="row">
-        <div class="col-12 alert alert-success">L'utilisateur à bien été ajouté</div>
+        <?php
+        switch ($_GET['type']){
+            case 'classe':
+                $message = 'La classe à bien été ajouté';
+                break;
+            case 'user':
+                $message = 'L\'utilisateur à bien été ajouté';
+                break;
+            case 'implanterProf':
+                $message = 'Le professeur à bien été implanté';
+        }
+        ?>
+        <div class="col-12 alert alert-success"><?= $message ?></div>
     </div>
     <?php endif; ?>
-</div>
 
 
 <?php

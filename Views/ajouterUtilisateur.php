@@ -1,9 +1,9 @@
 <?php
-session_start();
 ob_start();
+$stylesheets = ['formulaire'];
 ?>
-<div class="container formInscription d-flex align-items-center justify-content-center">
-    <form action="testInscription.php" method="post" class="d-flex flex-column justify-content-center align-items-center text-center col-12">
+
+    <form action="index.php?action=addUser" method="post" class="d-flex flex-column justify-content-center align-items-center text-center col-12">
         <div class="form-row">
             <div class="input">
                 <input type="text" class="form-control" name = "nom" placeholder="Nom">
@@ -34,11 +34,7 @@ ob_start();
         </div>
         <input type="submit" class = "btn btn-primary text-center">
     </form>
-    <script src="JS/ajouterUtilisateur.js"></script>
-</div>
-
-
-
+    <script src="../JS/formulaire.js"></script>
 
 
 <?php

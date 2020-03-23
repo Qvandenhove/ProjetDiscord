@@ -4,7 +4,11 @@
     <title>DiscordChat</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="CSS/main.css">
+    <?php
+    array_push($stylesheets,'main');
+    foreach ($stylesheets as $stylesheet) :?>
+        <link rel="stylesheet" type="text/css" href="CSS/<?=$stylesheet ?>.css">
+    <?php endforeach; ?>
 </head>
 <body>
 <header>
@@ -12,15 +16,17 @@
         <div class="col-3 d-flex flex-inline align-items-end menu">
             <?php if(!empty($_SESSION)): ?>
             <div class="dropdown">
-                <a class="btn btn-info dropdown-toggle" href = "" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="index.php?action=connected" class="btn btn-info">Accueil</a>
+                <a class="btn btn-info dropdown-toggle" href = "" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 5px">
                     Ajouter
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class = "dropdown-item" href="ajouterUtilisateur.php">Utilisateur</a>
-                    <a class = "dropdown-item" href="#">Classe</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+
+                    <a class = "dropdown-item" href="index.php?action=subscribeForm">Utilisateur</a>
+                    <a class = "dropdown-item" href="index.php?action=addClassForm">Classe</a>
                 </div>
             </div>
-                <div class = "dropdown"><a href="#" class = "btn btn-info">Gestion</a></div>
+                <div class = "dropdown"><a href="index.php?action=searchTeachersForm" class = "btn btn-info">Gestion</a></div>
             <?php endif;?>
         </div>
         <div class="col-6 text-center">
@@ -43,7 +49,11 @@
     </div>
 </header>
 
-<?= $content ?>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row d-flex justify-content-center align-items-center">
+        <?= $content ?>
+    </div>
+</div>
 
 <footer class = "text-center">
     <h1>Dernière Modification : 19/03/2020</h1>
