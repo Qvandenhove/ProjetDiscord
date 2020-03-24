@@ -15,12 +15,15 @@ $stylesheets = ['formulaire','tableaux'];
         </div>
         <div id="nomProfesseurVide" class = "alert alert-danger hidden">Merci de remplir ce champ</div>
         <div class = "row" style = "margin-top: 10px">
-            <table class = "col-12 resultatRecherche" id = "resultatRecherche">
-                <tr>
-                    <td>Nom</td>
-                    <td>Niveau</td>
-                    <td></td>
-                </tr>
+            <table class = "col-12 resultatRecherche">
+                <thead>
+                    <tr>
+                        <td>Nom</td>
+                        <td>Niveau</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id = "resultatRecherche"></tbody>
             </table>
         </div>
     </form>

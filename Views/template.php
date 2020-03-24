@@ -15,18 +15,22 @@
     <div class="row d-flex align-items-center">
         <div class="col-3 d-flex flex-inline align-items-end menu">
             <?php if(!empty($_SESSION)): ?>
-            <div class="dropdown">
-                <a href="index.php?action=connected" class="btn btn-info">Accueil</a>
-                <a class="btn btn-info dropdown-toggle" href = "" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 5px">
-                    Ajouter
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+                <a href="index.php?action=myPage" class="btn btn-info  lienMenu">Accueil</a>
+                <?php if($_SESSION['role'] > 0):?>
+                <div class="dropdown">
+                    <a class="btn btn-info dropdown-toggle" href = "" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 5px">
+                        Ajouter
+                    </a>
 
-                    <a class = "dropdown-item" href="index.php?action=subscribeForm">Utilisateur</a>
-                    <a class = "dropdown-item" href="index.php?action=addClassForm">Classe</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+                        <a class = "dropdown-item lienMenu" href="index.php?action=subscribeForm">Utilisateur</a>
+                        <?php if($_SESSION['role'] == 2):?>
+                        <a class = "dropdown-item lienMenu" href="index.php?action=addClassForm">Classe</a>
+                        <?php endif;?>
+                    </div>
                 </div>
-            </div>
-                <div class = "dropdown"><a href="index.php?action=searchTeachersForm" class = "btn btn-info">Gestion</a></div>
+                <a href="index.php?action=searchUsersForm" class = "btn btn-info lienMenu">Gestion</a>
+                <?php endif;?>
             <?php endif;?>
         </div>
         <div class="col-6 text-center">
@@ -37,10 +41,10 @@
             <h4><?=$_SESSION['prenom'].' '.$_SESSION['nom'] ?></h4>
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="MediaContent/Images/<?=$_SESSION['role'] ?>.png">
+                    <img src="MediaContent/Images/<?=['etudiant','professeur','admin'][$_SESSION['role']] ?>.png">
                 </a>
                 <div class="dropdown-menu disconnect" aria-labelledby="dropdownMenuLink">
-                    <a class = "dropdown-item disconnect" href="deconnexion.php">Déconnexion</a>
+                    <a class = "dropdown-item disconnect" href="index.php?action=disconnect">Déconnexion</a>
                 </div>
             </div>
             <?php endif;?>

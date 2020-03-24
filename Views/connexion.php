@@ -1,12 +1,9 @@
 <?php
 ob_start();
 $stylesheets = ['formulaire'];
-if(!empty($_SESSION)){
-    session_destroy();
-}
 ?>
 
-    <div class="col">
+    <div class="col-6">
         <form action="index.php?action=connection" method="post" class="d-flex flex-column justify-content-center">
             <div class="form-row d-column-flex justify-content-center align-items-center">
                 <input class = "form-control" placeholder = "Votre mail" type="email" name = "mail" id = "mail">
@@ -23,6 +20,7 @@ if(!empty($_SESSION)){
             <div class="form-row d-column-flex justify-content-center align-items-center">
                 <input type="submit" class = "btn btn-dark">
             </div>
+            <div class="alert alert-danger wrongLog hidden">Vos identifiants sont incorrects</div>
         </form>
     </div>
     <script src="JS/formulaire.js"></script>

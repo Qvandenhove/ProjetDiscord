@@ -20,3 +20,10 @@ formulaire.addEventListener('submit',function(e){
         })
     }
 });
+if(document.location.href.split("=")[1] !== undefined && document.location.href.split("=")[1] ==='wrongLog'){
+    document.querySelector('.wrongLog').classList.remove('hidden')
+    champs.forEach(function(champ){
+        champ.style.borderColor = 'red';
+        champ.style.borderWidth = '2px';
+    })
+}

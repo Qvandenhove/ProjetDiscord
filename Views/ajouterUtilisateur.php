@@ -3,7 +3,7 @@ ob_start();
 $stylesheets = ['formulaire'];
 ?>
 
-    <form action="index.php?action=addUser" method="post" class="d-flex flex-column justify-content-center align-items-center text-center col-12">
+    <form action="index.php?action=addUser" method="post" class="d-flex flex-column justify-content-center align-items-center text-center col-9">
         <div class="form-row">
             <div class="input">
                 <input type="text" class="form-control" name = "nom" placeholder="Nom">
@@ -28,8 +28,10 @@ $stylesheets = ['formulaire'];
         <div class="form-row d-flex justify-content-center">
             <select type="text" class="form-control" name = "role">
                 <option value="eleve">Élève</option>
-                <option value="prof">Professeur</option>
-                <option value="admin">Administrateur</option>
+                <?php if($_SESSION['role'] == 2):?>
+                    <option value="prof">Professeur</option>
+                    <option value="admin">Administrateur</option>
+                <?php endif; ?>
             </select>
         </div>
         <input type="submit" class = "btn btn-primary text-center">
