@@ -9,7 +9,7 @@ function getMessages() {
         const result = JSON.parse(this.responseText);
         const html = result.reverse().map(function (message) {
             return `
-            <div class="contenuMessage">
+            <div class="mt-3 mb-1 contenuMessage">
                 <p><strong> ${message.nom} - ${message.prenom}</strong></p>
                 <p>${message.message}</p>
             </div>
@@ -28,7 +28,7 @@ function getMessages() {
 function postMessage(e) {
     e.preventDefault();
 
-    const message = document.querySelector('textarea');
+    const message = document.querySelector('input[name=message]');
 
     const data = new FormData;
 
