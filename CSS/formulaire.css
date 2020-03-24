@@ -1,0 +1,25 @@
+.formConnexion{
+    height: 80%;
+}
+
+form{
+    height: 500px;
+    background-color: #9CD1EB;
+    margin-bottom: 100px;
+    border-radius: 10px;
+    padding: 0 100px;
+}
+
+.form-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input{
+    width: 40%;
+}
+
+.hidden{
+    visibility: hidden;
+}
