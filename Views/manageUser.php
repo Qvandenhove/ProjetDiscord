@@ -35,6 +35,9 @@ $stylesheets = ['formulaire','tableaux'];
 
 
     <script src = "JS/searchUser.js"></script>
+    <script>
+        document.querySelector('select').addEventListener('change',rechercher)
+    </script>
 <?php
 $content = ob_get_clean();
 require('template.php');
