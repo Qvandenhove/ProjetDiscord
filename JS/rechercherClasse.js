@@ -20,7 +20,7 @@ function search(){
         }
     };
     let data = {nomClasse : champs[0].value, niveauClasse : champs[1].value};
-    request.open("POST",'http://localhost/DiscordChat/index.php?action=getClasses');
+    request.open("POST",'index.php?action=getClasses');
     request.setRequestHeader('Content-Type','application/json');
     request.send(JSON.stringify(data));
 }

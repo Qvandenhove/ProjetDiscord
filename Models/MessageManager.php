@@ -30,8 +30,6 @@ class MessageManager extends Manager
             'message' => $message
         ));
         $test = var_export($_SESSION['id'],true);
-        file_put_contents('fichier.txt',$test);
-        file_put_contents('fichier.txt',$test);
         echo json_encode(["status" => "success"]);
     }
 }

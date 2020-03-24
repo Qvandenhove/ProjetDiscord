@@ -4,7 +4,7 @@ require('Controller/back.php');
 require ('Controller/front.php');
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
-if(!empty($_SESSION) || $action == 'conncetion' || true){
+if(!empty($_SESSION) || $action == 'connection'){
     switch($action){
         case 'addUser':
             addUser();
@@ -44,8 +44,7 @@ if(!empty($_SESSION) || $action == 'conncetion' || true){
             break;
 
         case 'chat':
-            getUserClasses();
-            chat();
+            chat(getUserClasses());
             break;
         case 'postMessage':
             postMessage();

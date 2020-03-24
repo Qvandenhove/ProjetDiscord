@@ -17,7 +17,7 @@ function rechercher(){
         }
     };
     let data = {nom : champs[0].value, isTeacher : Boolean(document.querySelector('select').value)};
-    request.open("POST",'http://localhost/DiscordChat/index.php?action=getUsers');
+    request.open("POST",'index.php?action=getUsers');
     request.setRequestHeader('Content-Type','application/json');
     request.send(JSON.stringify(data));
 }
