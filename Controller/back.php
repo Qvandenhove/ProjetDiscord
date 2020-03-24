@@ -65,3 +65,8 @@ function getMessage(){
     $messageManager = new CESI\ProjetDiscord\MessageManager();
     $messageManager->getMessages($room);
 }
+
+function getUserClasses(){
+    $classsManager = new CESI\ProjetDiscord\ClassManager();
+    $userClasses = $classsManager->getUserClasses();
+}

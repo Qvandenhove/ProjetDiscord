@@ -14,8 +14,8 @@ class ClassManager extends Manager
     public function addClass(){
         $addClassReq = $this->db->prepare('INSERT INTO classe VALUES (id_classe,:nomClasse,:niveauClasse)');
         $success = $addClassReq->execute(array(
-            ':nomClasse' => $_POST['nomClasse'],
-            ':niveauClasse' => $_POST['niveauClasse']
+            ':nomClasse' => htmlspecialchars($_POST['nomClasse']),
+            ':niveauClasse' => htmlspecialchars($_POST['niveauClasse'])
         ));
 
         $reqClassId = $this->db->query('SELECT id_classe FROM classe ORDER BY id_classe DESC LIMIT 1');

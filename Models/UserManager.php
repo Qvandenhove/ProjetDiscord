@@ -24,9 +24,9 @@ class UserManager extends Manager
         }
 
         $success = $addReq->execute(array(
-            ':nom' => $_POST['nom'],
-            ':prenom' => $_POST['prenom'],
-            ':mail' => $_POST['mail'],
+            ':nom' => htmlspecialchars($_POST['nom']),
+            ':prenom' => htmlspecialchars($_POST['prenom']),
+            ':mail' => htmlspecialchars($_POST['mail']),
             ':estAdmin' => $admin,
             ':estProf' => $prof,
             ':pass' => password_hash($_POST['pass'], PASSWORD_DEFAULT)
@@ -59,7 +59,7 @@ class UserManager extends Manager
         $data = json_decode($data,true);
         $searchUsers = $this->db->prepare('SELECT id,nom,prenom,mail FROM utilisateur WHERE est_professeur = :teacher AND est_admin = false AND prenom LIKE :nom');
 
-        $searchUsers->execute(array(':nom' => '%'.$data['nom'].'%', ':teacher' => $data['isTeacher']));
+        $searchUsers->execute(array(':nom' => '%'.htmlspecialchars($data['nom']).'%', ':teacher' => htmlspecialchars($data['isTeacher'])));
         $users = [];
         $count = 1;
         while ($user = $searchUsers->fetch()){

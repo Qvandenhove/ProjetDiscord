@@ -24,5 +24,6 @@ function searchClassesForm(){
 }
 
 function chat(){
+
     require('Views/chat.php');
 }
