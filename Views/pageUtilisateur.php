@@ -52,6 +52,10 @@ $stylesheets = ['tableaux','formulaire']
         ?>
         <div class="col-12 alert alert-success"><?= $message ?></div>
     </div>
+    <?php elseif(isset($_GET['error']) && $_GET['error'] == 'accessDenied'): ?>
+    <div class="row">
+        <div class="col-12 alert alert-danger">Vous n'avez pas accès à ce salon merci de prévenir votre <?= ['etudiant','professeur','administrateur'][$_SESSION['role'] + 1] ?></div>
+    </div>
     <?php endif; ?>
     <script src = "JS/rechercherClasse.js"></script>
 

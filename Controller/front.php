@@ -23,7 +23,22 @@ function searchClassesForm(){
     require('Views/choisirClasse.php');
 }
 
-function chat(){
+function chat($userClasses){
+    $classes = [];
+    foreach ($userClasses->fetchAll() as $userClass){
+        $classes[] = $userClass['id_classe'];
+    }
+    $access = false;
+    foreach ($classes as $class){
+        if ($class == $_GET['class']){
+            $access = true;
+            break;
+        }
+    }
+    if($access){
+        require('Views/chat.php');
+    }else{
+        header('Location: index.php?action=myPage&error=accessDenied');
+    }
 
-    require('Views/chat.php');
 }
