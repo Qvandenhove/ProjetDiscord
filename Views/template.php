@@ -9,6 +9,8 @@
     foreach ($stylesheets as $stylesheet) :?>
         <link rel="stylesheet" type="text/css" href="CSS/<?=$stylesheet ?>.css">
     <?php endforeach; ?>
+    <link href="https://fonts.googleapis.com/css?family=Bellota|Lobster&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a56391b491.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
