@@ -35,8 +35,8 @@ if(!empty($_SESSION) || $action == 'connection'){
         case 'getClasses':
             getClasses();
             break;
-        case 'implantTeacher':
-            implantTeacher();
+        case 'implantUser':
+            implantUser();
             break;
 
         case 'disconnect':
@@ -44,8 +44,42 @@ if(!empty($_SESSION) || $action == 'connection'){
             break;
 
         case 'chat':
-            $usersInClass = getUsersInClass($_GET['class']);
-            chat($usersInClass);
+            $allRooms = getClassChatRooms($_GET['class']);
+            $allRooms = $allRooms->fetchAll();
+            if($_GET['room'] == 'general'){
+                $usersInClass = getUsersInClass($_GET['class']);
+                chat($usersInClass,getChatRoom($_GET['class'],false));
+            }else {
+                $roomExists = false;
+                $reverse = false;
+                foreach ($allRooms as $room){
+
+                    if ($room['nom'] == $_GET['room']){
+                        $chatRoom = $room['nom'];
+                        $roomExists = true;
+                        break;
+                    }elseif (explode('_',$_GET['room'])[1].'_'.explode('_',$_GET['room'])[0] == $room['nom']){
+
+                        $roomExists = true;
+                        $chatRoom = explode('_',$_GET['room'])[1].'_'.explode('_',$_GET['room'])[0];
+                        $reverse = true;
+                    }
+                }
+                if ($roomExists){
+                    $userInRoom = getRoomUsers($chatRoom,$_GET['class']);
+                    chat($userInRoom,$reverse);
+                }else{
+                    addChatRoom($_GET['class'],str_replace(' ','-',$_GET['room']));
+                    addUserInRoom($_SESSION['id'],$_GET['room'],$_GET['class']);
+                    addUserInRoom($_GET['targetUser'],$_GET['room'],$_GET['class']);
+                    $userInRoom = getRoomUsers($_GET['room'],$_GET['class']);
+                    $chatRoom = getChatRoom($_GET['room'],$_GET['class']);
+
+                    chat($userInRoom,false);
+                }
+            }
+
+
             break;
         case 'postMessage':
             postMessage();

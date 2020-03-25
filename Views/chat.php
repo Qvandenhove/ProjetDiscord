@@ -1,4 +1,5 @@
 <?php
+$students = [];
 ob_start();
 $stylesheets = ['chat']
 ?>
@@ -6,7 +7,7 @@ $stylesheets = ['chat']
 <div class="col-12 d-flex row justify-content-center section containerMessage">
     <div class="col-9 p-0 card">
         <div class="card-header">
-            <h1 class="text-center titleCard">Tous</h1>
+            <h1 class="text-center titleCard"><?=str_replace('-',' ',$_GET['room']) ?></h1>
         </div>
 
         <div id="contenuMessages" class="card-body boxMessages">
@@ -28,7 +29,7 @@ $stylesheets = ['chat']
             <h3 class="titlePerson">Professeur</h3>
             <?php foreach($users as $user) :?>
                 <?php if($user['est_professeur']): ?>
-                    <p class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></p>
+                    <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a>
                 <?php else :
                     $students[] = $user;
                 endif;
@@ -37,7 +38,7 @@ $stylesheets = ['chat']
         <div class="col-6 eleves">
             <?php foreach ($students as $student): ?>
                 <h3 class="titlePerson">Étudiant</h3>
-                <p class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></p>
+            <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a>
             <?php endforeach; ?>
         </div>
     </div>
@@ -45,6 +46,7 @@ $stylesheets = ['chat']
 
     <script src = 'JS/chat.js'></script>
 <?php
+
 $content = ob_get_clean();
 require('Views/template.php');
 

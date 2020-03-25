@@ -23,13 +23,18 @@ function connectUser(){
 function addClass(){
     $classManager = new CESI\ProjetDiscord\ClassManager();
     $success1 = $classManager->addClass();
-    $charRoomManger = new CESI\ProjetDiscord\ChatRoomManager();
-    $success2 = $charRoomManger->createChatRoom(intval($success1[1]),'général');
+    $success2 = addChatRoom(intval($success1[1]),'général');
     if($success1[0] and $success2){
         header('Location: index.php?action=myPage&ajout=succes&type=classe');
     }else{
         header('Location: index.php?action=myPage&ajout=echec');
     }
+}
+
+function addChatRoom($class, $name){
+    $charRoomManger = new CESI\ProjetDiscord\ChatRoomManager();
+    $success = $charRoomManger->createChatRoom($class,$name);
+    return $success;
 }
 
 function getUsers(){
@@ -42,9 +47,9 @@ function getClasses(){
     $ClassManager->searchClasses();
 }
 
-function implantTeacher(){
+function implantUser(){
     $userManager = new CESI\ProjetDiscord\UserManager();
-    $userManager->implantTeacher();
+    $userManager->implantUser();
 }
 
 function disconnect(){
@@ -53,22 +58,26 @@ function disconnect(){
 }
 
 function postMessage(){
-    $ChatRoomManager = new CESI\ProjetDiscord\ChatRoomManager();
-    $room = $ChatRoomManager->getChatRoom($_GET['class'],$_GET['room']);
+    $room = getChatRoom($_GET['class'],$_GET['room']);
     $messageManager = new CESI\ProjetDiscord\MessageManager();
     $messageManager->postMessage($room);
 }
 
 function getMessage(){
-    $ChatRoomManager = new CESI\ProjetDiscord\ChatRoomManager();
-    $room = $ChatRoomManager->getChatRoom($_GET['class'],$_GET['room']);
+    $room = getChatRoom($_GET['class'],$_GET['room']);
     $messageManager = new CESI\ProjetDiscord\MessageManager();
     $messageManager->getMessages($room);
 }
 
+function getChatRoom($class, $name){
+    $ChatRoomManager = new CESI\ProjetDiscord\ChatRoomManager();
+    $room = $ChatRoomManager->getChatRoom($class,$name);
+    return $room;
+}
+
 function getUserClasses(){
-    $classsManager = new CESI\ProjetDiscord\ClassManager();
-    $userClasses = $classsManager->getUserClasses();
+    $classManager = new CESI\ProjetDiscord\ClassManager();
+    $userClasses = $classManager->getUserClasses();
     return $userClasses;
 }
 
@@ -76,4 +85,22 @@ function getUsersInClass($class){
     $classManager = new CESI\ProjetDiscord\ClassManager();
     $usersInClass = $classManager->getUserInClass($class);
     return $usersInClass;
+}
+
+function getClassChatRooms($class){
+    $roomManager = new CESI\ProjetDiscord\ChatRoomManager();
+    return $roomManager->getClassChatRooms($class);
+}
+
+function addUserInRoom($user,$roomName,$class){
+    $room = getChatRoom($class, $roomName);
+    $roomManager = new CESI\ProjetDiscord\ChatRoomManager();
+    $roomManager->addUserToChat($user,$room);
+}
+
+function getRoomUsers($roomName,$class){
+    $room = getChatRoom($class, $roomName);
+    $roomManager = new CESI\ProjetDiscord\ChatRoomManager();
+    $users = $roomManager->getUserInRoom($room);
+    return $users;
 }
