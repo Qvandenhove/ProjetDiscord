@@ -76,7 +76,7 @@ class UserManager extends Manager
 
 
 
-    public function implantTeacher(){
+    public function implantUser(){
         $implanterProf = $this->db->prepare('INSERT INTO appartient VALUES (:prof,:classe)');
         $success = $implanterProf->execute(array(
             ':prof' => $_GET['userId'],

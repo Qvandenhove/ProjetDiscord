@@ -1,4 +1,5 @@
 <?php
+$students = [];
 ob_start();
 $stylesheets = ['chat']
 ?>
@@ -6,7 +7,7 @@ $stylesheets = ['chat']
 <div class="col-12 d-flex row justify-content-center section containerMessage">
     <div class="col-9 p-0 card">
         <div class="card-header">
-            <h1 class="text-center titleCard">Tous</h1>
+            <h1 class="text-center titleCard"><?=str_replace('-',' ',$_GET['room']) ?></h1>
         </div>
 
         <div id="contenuMessages" class="card-body boxMessages">
@@ -25,28 +26,28 @@ $stylesheets = ['chat']
     </div>
 
     <div class="col-3 p-0 nav">
-        <div class="professeur">
+        <div class="col-6 professeur">
             <h3 class="titlePerson">Professeur</h3>
-            <p class="namePerson">CAFLERS - Frédéric</p>
+            <?php foreach($users as $user) :?>
+                <?php if($user['est_professeur']): ?>
+                    <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a>
+                <?php else :
+                    $students[] = $user;
+                endif;
+             endforeach;?>
         </div>
-        <div class="eleves">
-            <h3 class="titlePerson">Élèves</h3>
-            <p class="namePerson">ANDRIEU - Quentin</p>
-            <p class="namePerson">CREPIN - Benoit</p>
-            <p class="namePerson">LACOUR - Valentin</p>
-            <p class="namePerson">LANCRY - Arno</p>
-            <p class="namePerson">LE GALL - Martin</p>
-            <p class="namePerson">LECOLIER - Louis</p>
-            <p class="namePerson">LEJOSNE - Thomas</p>
-            <p class="namePerson">POTEZ - Martin</p>
-            <p class="namePerson">VANDAMME - Kevin</p>
-            <p class="namePerson">VANDENHOVE - Quentin</p>
+        <div class="col-6 eleves">
+            <?php foreach ($students as $student): ?>
+                <h3 class="titlePerson">Étudiant</h3>
+            <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
 
     <script src = 'JS/chat.js'></script>
 <?php
+
 $content = ob_get_clean();
 require('Views/template.php');
 

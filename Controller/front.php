@@ -23,14 +23,18 @@ function searchClassesForm(){
     require('Views/choisirClasse.php');
 }
 
-function chat($userClasses){
-    $classes = [];
-    foreach ($userClasses->fetchAll() as $userClass){
-        $classes[] = $userClass['id_classe'];
+function chat($usersInRoom,$reverse){
+    if($reverse){
+        header('Location: index.php?action=chat&class='.$_GET['class'].'&room='.explode('_',$_GET['room'])[1].'_'.explode('_',$_GET['room'])[0]);
+    }
+
+    $users = [];
+    foreach ($usersInRoom->fetchAll() as $user){
+        $users[] = $user;
     }
     $access = false;
-    foreach ($classes as $class){
-        if ($class == $_GET['class']){
+    foreach ($users as $user){
+        if ($user['id'] == $_SESSION['id']){
             $access = true;
             break;
         }
@@ -40,5 +44,4 @@ function chat($userClasses){
     }else{
         header('Location: index.php?action=myPage&error=accessDenied');
     }
-
 }
