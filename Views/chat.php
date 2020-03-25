@@ -25,8 +25,8 @@ $stylesheets = ['chat']
         </div>
     </div>
 
-    <div class="col-3 p-0 nav">
-        <div class="col-6 professeur">
+    <div class="col-3 d-flex flex-column p-0 nav">
+        <div class="professeur">
             <h3 class="titlePerson">Professeur</h3>
             <?php foreach($users as $user) :?>
                 <?php if($user['est_professeur']): ?>
@@ -36,10 +36,10 @@ $stylesheets = ['chat']
                 endif;
              endforeach;?>
         </div>
-        <div class="col-6 eleves">
+        <div class="eleves d-flex flex-column">
+            <h3 class="titlePerson">Étudiant</h3>
             <?php foreach ($students as $student): ?>
-                <h3 class="titlePerson">Étudiant</h3>
-            <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a>
+                <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>&targetUser=<?=$student['id'] ?>" target="_blank" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a>
             <?php endforeach; ?>
         </div>
     </div>
