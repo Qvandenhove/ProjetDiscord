@@ -29,6 +29,10 @@
     width: 10%;
 }
 
+    .hidden{
+        visibility: hidden;
+    }
+
 
 
 

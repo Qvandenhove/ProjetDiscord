@@ -40,6 +40,7 @@ function postMessage(e) {
     xhr.onload = function () {
         message.value = '';
         message.focus();
+        messageEnCours.classList.add('hidden')
         getMessages()
     };
 
@@ -51,3 +52,24 @@ document.querySelector('form').addEventListener('submit', postMessage);
 const interval = setInterval(getMessages, 1000); // Permet de rafraichir la page tous les x temps
 
 getMessages();
+
+
+const inputMessage = document.querySelector('input[name=message]')
+const messageEnCours = document.getElementById('messageEnCours')
+
+function estEnTrainDEcrire() {
+    const xhr = new XMLHttpRequest()
+
+    xhr.open('POST', 'index.php?action=chat')
+
+    if (this.value == "" || this.value == null) {
+        messageEnCours.classList.add('hidden')
+        console.log("input vide")
+    } else {
+        messageEnCours.classList.remove('hidden')
+        console.log('Est en train d\'écrire')
+    }
+}
+
+inputMessage.addEventListener('input', estEnTrainDEcrire)
+

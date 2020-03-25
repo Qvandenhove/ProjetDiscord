@@ -18,6 +18,7 @@ $stylesheets = ['chat']
                 <div class="row">
                     <input type="text" class="mt-2 p-1 inputMessage" name="message" maxlength="500" placeholder="Message" autofocus>
                     <button type="submit" class="fas fa-paper-plane mt-2 border-0 btnMessage"></button>
+                    <div id="messageEnCours" class="hidden">Est en train d'écrire</div>
                 </div>
             </form>
         </div>
