@@ -23,14 +23,14 @@ function searchClassesForm(){
     require('Views/choisirClasse.php');
 }
 
-function chat($userClasses){
-    $classes = [];
-    foreach ($userClasses->fetchAll() as $userClass){
-        $classes[] = $userClass['id_classe'];
+function chat($usersInClass){
+    $users = [];
+    foreach ($usersInClass->fetchAll() as $user){
+        $users[] = $user;
     }
     $access = false;
-    foreach ($classes as $class){
-        if ($class == $_GET['class']){
+    foreach ($users as $user){
+        if ($user['id'] == $_SESSION['id']){
             $access = true;
             break;
         }

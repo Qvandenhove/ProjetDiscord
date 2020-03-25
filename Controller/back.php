@@ -71,3 +71,9 @@ function getUserClasses(){
     $userClasses = $classsManager->getUserClasses();
     return $userClasses;
 }
+
+function getUsersInClass($class){
+    $classManager = new CESI\ProjetDiscord\ClassManager();
+    $usersInClass = $classManager->getUserInClass($class);
+    return $usersInClass;
+}

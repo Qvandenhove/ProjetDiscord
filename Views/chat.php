@@ -24,22 +24,21 @@ $stylesheets = ['chat']
     </div>
 
     <div class="col-3 p-0 nav">
-        <div class="professeur">
+        <div class="col-6 professeur">
             <h3 class="titlePerson">Professeur</h3>
-            <p class="namePerson">CAFLERS - Frédéric</p>
+            <?php foreach($users as $user) :?>
+                <?php if($user['est_professeur']): ?>
+                    <p class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></p>
+                <?php else :
+                    $students[] = $user;
+                endif;
+             endforeach;?>
         </div>
-        <div class="eleves">
-            <h3 class="titlePerson">Élèves</h3>
-            <p class="namePerson">ANDRIEU - Quentin</p>
-            <p class="namePerson">CREPIN - Benoit</p>
-            <p class="namePerson">LACOUR - Valentin</p>
-            <p class="namePerson">LANCRY - Arno</p>
-            <p class="namePerson">LE GALL - Martin</p>
-            <p class="namePerson">LECOLIER - Louis</p>
-            <p class="namePerson">LEJOSNE - Thomas</p>
-            <p class="namePerson">POTEZ - Martin</p>
-            <p class="namePerson">VANDAMME - Kevin</p>
-            <p class="namePerson">VANDENHOVE - Quentin</p>
+        <div class="col-6 eleves">
+            <?php foreach ($students as $student): ?>
+                <h3 class="titlePerson">Étudiant</h3>
+                <p class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></p>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

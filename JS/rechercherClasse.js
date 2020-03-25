@@ -10,10 +10,11 @@ function search(){
             let resultat = JSON.parse(this.responseText);
 
             for(classe in resultat){
-                if(document.location.href.split("=")[1].toString().slice(0,6) === 'myPage'){
-                    tableContent += '<tr><td>' + resultat[classe]['nom_classe'] + '</td><td>' + resultat[classe][2] + '</td><td class = "text-center"><a href="index.php?action=chat&class=' +resultat[classe]['id_classe'] +'&room=general' + '" class = "btn btn-primary">Entrer en communication</a></td></tr>'
-                }else{
+                if(document.location.href.split("=")[1].toString().slice(0,6) === 'chooseClass'){
                     tableContent += '<tr><td>' + resultat[classe]['nom_classe'] + '</td><td>' + resultat[classe][2] + '</td><td class = "text-center"><a href="index.php?action=implantTeacher&userId=' + document.location.href.split("=")[2].toString() +'&classId=' + resultat[classe]["id_classe"] + '" class = "btn btn-primary">Implanter dans cette classe</a></td></tr>'
+
+                }else{
+                    tableContent += '<tr><td>' + resultat[classe]['nom_classe'] + '</td><td>' + resultat[classe][2] + '</td><td class = "text-center"><a href="index.php?action=chat&class=' +resultat[classe]['id_classe'] +'&room=general' + '" class = "btn btn-primary">Entrer en communication</a></td></tr>'
                 }
             }
             tableauResultat.innerHTML = tableContent;

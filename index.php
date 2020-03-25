@@ -44,7 +44,8 @@ if(!empty($_SESSION) || $action == 'connection'){
             break;
 
         case 'chat':
-            chat(getUserClasses());
+            $usersInClass = getUsersInClass($_GET['class']);
+            chat($usersInClass);
             break;
         case 'postMessage':
             postMessage();
