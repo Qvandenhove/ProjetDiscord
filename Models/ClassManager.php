@@ -61,4 +61,10 @@ class ClassManager extends Manager
         ));
         return $rechercheClasses;
     }
+
+    public function getUserInClass($class){
+        $users = $this->db->prepare('SELECT utilisateur.est_professeur, utilisateur.nom,utilisateur.prenom,utilisateur.id FROM appartient JOIN utilisateur ON utilisateur.id = appartient.utilisateur WHERE classe = :class');
+        $users->execute([':class' => $class]);
+        return $users;
+    }
 }

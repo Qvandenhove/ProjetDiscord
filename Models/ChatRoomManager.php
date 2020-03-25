@@ -21,4 +21,21 @@ class ChatRoomManager extends Manager
         $success = $getRoom->execute(array(':class' => $class, ':roomName' => $name));
         return $getRoom->fetch()['id'];
     }
+
+    public function getClassChatRooms($class){
+        $allRooms = $this->db->prepare('SELECT * FROM salle_chat WHERE classe = :class');
+        $allRooms->execute([':class' => $class]);
+        return $allRooms;
+    }
+
+    public function addUserToChat($user,$room){
+        $addUser = $this->db->prepare('INSERT INTO communique VALUES(:user,:room)');
+        $addUser->execute([':user' => $user, ':room' => $room]);
+    }
+
+    public function getUserInRoom($room){
+        $usersInRoom = $this->db->prepare('SELECT utilisateur.nom, utilisateur.prenom, utilisateur.id, utilisateur.est_professeur FROM communique JOIN utilisateur ON utilisateur.id = communique.utilisateur WHERE salle = :room');
+        $usersInRoom->execute([':room' => $room]);
+        return $usersInRoom;
+    }
 }
