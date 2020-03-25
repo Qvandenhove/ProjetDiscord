@@ -94,4 +94,22 @@ class UserManager extends Manager
         session_destroy();
         header('Location:index.php');
     }
+
+    public function updateWritingStatus($user){
+        $update = $this->db->prepare('UPDATE utilisateur SET isWriting = true WHERE id = :user');
+        $update->execute([':user' => $user]);
+    }
+
+    public function getWritingStatus(){
+        $user = file_get_contents('php://input');
+        $user = json_decode($user, true,JSON_UNESCAPED_UNICODE);
+        $writingStatus = $this->db->prepare('SELECT isWriting FROM utilisateur WHERE id = :user');
+        $writingStatus->execute([':user' => $user['id']]);
+        echo json_encode($writingStatus->fetch(),JSON_UNESCAPED_UNICODE);
+    }
+
+    public function removeWritingStatus($user){
+        $update = $this->db->prepare('UPDATE utilisateur SET isWriting = false WHERE id = :user');
+        $update->execute([':user' => $user]);
+    }
 }
