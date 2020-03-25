@@ -101,21 +101,7 @@ CREATE TABLE `messages` (
 -- Déchargement des données de la table `messages`
 --
 
-INSERT INTO `messages` (`id`, `salon`, `utilisateur`, `message`) VALUES
-(1, 4, 2, 'TESTONS CA'),
-(2, 4, 9, 'ça marche'),
-(3, 4, 9, '?'),
-(4, 4, 9, 'je sais pas?'),
-(5, 4, 9, 'TEST'),
-(34, 5, 9, 'TEST'),
-(35, 6, 16, 'Voici la liste des devoirs à faire cette semaine'),
-(36, 6, 17, 'Du travail en plus ..'),
-(38, 5, 9, 'Qui est chaud pour une game ?'),
-(39, 5, 9, 'Personne?'),
-(43, 53, 6, 'TEST'),
-(44, 53, 9, 'Petite game?'),
-(45, 53, 9, 'Merde mauvais chat dsl fred'),
-(46, 53, 6, '... touours sérieux');
+
 
 -- --------------------------------------------------------
 
