@@ -98,6 +98,11 @@ if(!empty($_SESSION) || $action == 'connection'){
         case 'getWritingStatus':
             getWritingStatus();
             break;
+
+        case 'getMessageCount';
+            getMessageCount($_SESSION['id']);
+            break;
+
         default:
             if(!empty($_SESSION)){
                 home();

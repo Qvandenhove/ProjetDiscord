@@ -37,6 +37,7 @@ header{
 
 .disconnect{
     margin-top: 40px;
+    left:-15px!important;
 }
 
 .dropdown-item.disconnect{

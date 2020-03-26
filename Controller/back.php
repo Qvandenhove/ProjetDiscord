@@ -113,3 +113,23 @@ function removeWritingStatus($user){
     $userManager = new CESI\ProjetDiscord\UserManager();
     $userManager->removeWritingStatus($user);
 }
+
+function getUserRooms($user){
+    $roomManager = new CESI\ProjetDiscord\ChatRoomManager();
+    $rooms = $roomManager->getUserRooms($user);
+    return $rooms;
+}
+
+function getMessageCount($user){
+    $rooms = getUserRooms($user)->fetchAll();
+    $messageManager = new CESI\ProjetDiscord\MessageManager();
+    $messageCount = [];
+    $roomCount = 1;
+    foreach ($rooms as $room){
+        $count = $messageManager->getMessageCount($room['salle']);
+        if(isset($count['count'])){
+            $messageCount['room'.$roomCount] = [$count['nom'],$count['count']];
+        }
+    }
+    echo json_encode($messageCount, JSON_UNESCAPED_UNICODE);
+}

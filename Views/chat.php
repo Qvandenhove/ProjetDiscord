@@ -35,7 +35,12 @@ $stylesheets = ['chat']
             <h3 class="titlePerson">Professeur</h3>
             <?php foreach($users as $user) :?>
                 <?php if($user['est_professeur']): ?>
-                    <div class = "d-flex flex-inline"><a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a><div data-id="<?= $user['id'] ?>" id = "" class="hidden messageEnCours">Est en train d'écrire</div></div>
+                    <div class = "d-flex flex-inline">
+                        <div data-roomName = "<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>" data-roomNameReverse = "<?= str_replace(' ','-',$user['nom'].'_'.$_SESSION['nom'])?>" class="newMessage text-center hidden"><i class="fas fa-envelope-square"></i></div>
+                        <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a><div data-id="<?= $user['id'] ?>" id = "" class="hidden messageEnCours">
+                            Est en train d'écrire
+                        </div>
+                    </div>
                 <?php else :
                     $students[] = $user;
                 endif;
@@ -44,13 +49,14 @@ $stylesheets = ['chat']
         <div class="eleves d-flex flex-column">
             <h3 class="titlePerson">Étudiant</h3>
             <?php foreach ($students as $student): ?>
-                <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>&targetUser=<?=$student['id'] ?>" target="_blank" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a>
+                <div class = "d-flex flex-inline"><div data-roomName = "<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>" data-roomNameReverse = "<?= str_replace(' ','-',$student['nom'].'_'.$_SESSION['nom'])?>" class="newMessage text-center hidden"><i class="fas fa-envelope-square"></i></div><a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>&targetUser=<?=$student['id'] ?>" target="_blank" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a></div>
             <?php endforeach; ?>
         </div>
     </div>
 </div>
 
     <script src = 'JS/chat.js'></script>
+    <script src = 'JS/refreshPrivateChat.js'></script>
 <?php
 
 $content = ob_get_clean();
