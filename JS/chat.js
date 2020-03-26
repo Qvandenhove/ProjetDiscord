@@ -1,10 +1,13 @@
-let userClass = document.location.href.split('=')[2];
-let chatRoom = document.location.href.split('=')[3]
+let userClass = document.location.href.split('=')[2].split('&')[0];
+let chatRoom = document.location.href.split('=')[3].split('&')[0]
 let finClassNumber = userClass.indexOf('&');
+
+
+
 function getMessages() {
+
     //Recevoir les messages
     const xhr = new XMLHttpRequest();
-    userClass = (userClass.slice(0,finClassNumber));
     xhr.open("POST", 'index.php?action=getMessages&class=' + userClass +'&room=' +  chatRoom);
     xhr.onload = function() {
         const result = JSON.parse(this.responseText);
@@ -25,19 +28,28 @@ function getMessages() {
 
 //    Regarder utilisateurs en train d'écrire
     const req = new XMLHttpRequest();
-    req.open('POST', 'index.php?action=getWritingStatus');
-    req.onreadystatechange = function(){
-        if(this.status === 200 && this.readyState === XMLHttpRequest.DONE){
-            let response = (JSON.parse(this.responseText));
-            if(response.isWriting === '1'){
-                messageEnCours.classList.remove('hidden')
+    userClass = document.location.href.split('=')[2].split('&')[0]
+    req.open('GET', 'index.php?action=getWritingStatus&room=' + chatRoom + '&class=' + userClass);
+    req.onload = function(){
+        let response = JSON.parse(this.responseText);
+        for (user in response) {
+            if(response[user].isWriting === '1'){
+                messageEnCours.forEach(function(userWriting) {
+                    if (response[user].id === userWriting.dataset.id) {
+                        userWriting.classList.remove('hidden')
+                    }
+                })
             }else{
-                messageEnCours.classList.add('hidden')
+                messageEnCours.forEach(function(userWriting) {
+                    if (response[user].id === userWriting.dataset.id) {
+                        userWriting.classList.add('hidden')
+                    }
+                })
             }
         }
-    };
-    let teacher = {id : messageEnCours.dataset.id};
-    req.send(JSON.stringify(teacher))
+    }
+
+    req.send()
 }
 
 function postMessage(e) {
@@ -55,7 +67,7 @@ function postMessage(e) {
     xhr.onload = function () {
         message.value = '';
         message.focus();
-        messageEnCours.classList.add('hidden')
+        // messageEnCours.classList.add('hidden')
         getMessages()
     };
 
@@ -70,7 +82,7 @@ document.querySelector('form').addEventListener('submit', postMessage);
 const interval = setInterval(getMessages, 1000); // Permet de rafraichir la page tous les x temps
 
 const inputMessage = document.querySelector('input[name=message]');
-const messageEnCours = document.querySelector('.messageEnCours');
+const messageEnCours = document.querySelectorAll('.messageEnCours');
 
 getMessages();
 

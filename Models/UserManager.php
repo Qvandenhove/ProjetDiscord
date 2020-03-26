@@ -100,12 +100,14 @@ class UserManager extends Manager
         $update->execute([':user' => $user]);
     }
 
-    public function getWritingStatus(){
-        $user = file_get_contents('php://input');
-        $user = json_decode($user, true,JSON_UNESCAPED_UNICODE);
-        $writingStatus = $this->db->prepare('SELECT isWriting FROM utilisateur WHERE id = :user');
-        $writingStatus->execute([':user' => $user['id']]);
-        echo json_encode($writingStatus->fetch(),JSON_UNESCAPED_UNICODE);
+    public function getWritingStatus($users){
+        $commeTuVeux = [];
+        foreach ($users as $user) {
+            $writingStatus = $this->db->prepare('SELECT id, isWriting FROM utilisateur WHERE id = :user');
+            $writingStatus->execute([':user' => $user['id']]);
+            $commeTuVeux['user' . $user['id']] = $writingStatus->fetch();
+        }
+        echo json_encode($commeTuVeux,JSON_UNESCAPED_UNICODE);
     }
 
     public function removeWritingStatus($user){

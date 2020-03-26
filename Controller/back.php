@@ -104,9 +104,14 @@ function writeStatus($user){
     $userManager->updateWritingStatus($user);
 }
 
-function getWritingStatus(){
+function getWritingStatus($class, $room){
+    if ($room != 'general') {
+        $users = getRoomUsers($room, $class);
+    } else {
+        $users = getTeacherInClass($class);
+    }
     $userManager = new CESI\ProjetDiscord\UserManager();
-    $userManager->getWritingStatus();
+    $userManager->getWritingStatus($users->fetchAll());
 }
 
 function removeWritingStatus($user){
@@ -132,4 +137,10 @@ function getMessageCount($user){
         }
     }
     echo json_encode($messageCount, JSON_UNESCAPED_UNICODE);
+}
+
+function getTeacherInClass($class){
+    $classManager = new CESI\ProjetDiscord\ClassManager();
+    $teacherInClass = $classManager->getTeacherInClass($class);
+    return $teacherInClass;
 }

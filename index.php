@@ -96,7 +96,7 @@ if(!empty($_SESSION) || $action == 'connection'){
             removeWritingStatus($_SESSION['id']);
             break;
         case 'getWritingStatus':
-            getWritingStatus();
+            getWritingStatus($_GET['class'], $_GET['room']);
             break;
 
         case 'getMessageCount';

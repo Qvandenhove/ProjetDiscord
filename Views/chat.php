@@ -49,7 +49,9 @@ $stylesheets = ['chat']
         <div class="eleves d-flex flex-column">
             <h3 class="titlePerson">Étudiant</h3>
             <?php foreach ($students as $student): ?>
-                <div class = "d-flex flex-inline"><div data-roomName = "<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>" data-roomNameReverse = "<?= str_replace(' ','-',$student['nom'].'_'.$_SESSION['nom'])?>" class="newMessage text-center hidden"><i class="fas fa-envelope-square"></i></div><a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>&targetUser=<?=$student['id'] ?>" target="_blank" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a></div>
+                <div class = "d-flex flex-inline"><div data-roomName = "<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>" data-roomNameReverse = "<?= str_replace(' ','-',$student['nom'].'_'.$_SESSION['nom'])?>" class="newMessage text-center hidden"><i class="fas fa-envelope-square"></i></div><a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$student['nom']) ?>&targetUser=<?=$student['id'] ?>" target="_blank" class="namePerson"><?= $student['nom']?> - <?= $student['prenom'] ?></a><div data-id="<?= $student['id'] ?>" id = "" class="hidden messageEnCours">
+                        Est en train d'écrire
+                    </div></div>
             <?php endforeach; ?>
         </div>
     </div>
