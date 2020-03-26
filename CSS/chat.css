@@ -50,6 +50,14 @@
 .namePerson{
     color: #9CD1EB;
     font-weight: bold;
-    padding-left: 20%;
-    font-size: 1.3em;
+    font-size: 1.3rem;
+}
+
+.newMessage{
+    width: 20%;
+    height: 1.3rem;
+}
+
+.fa-envelope-square{
+    font-size: 2rem;
 }

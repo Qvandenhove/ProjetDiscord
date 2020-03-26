@@ -30,10 +30,8 @@ function getMessages() {
         if(this.status === 200 && this.readyState === XMLHttpRequest.DONE){
             let response = (JSON.parse(this.responseText));
             if(response.isWriting === '1'){
-                console.log('afficher');
                 messageEnCours.classList.remove('hidden')
             }else{
-                console.log('cacher');
                 messageEnCours.classList.add('hidden')
             }
         }
@@ -62,6 +60,9 @@ function postMessage(e) {
     };
 
     xhr.send(data)
+    let req = new XMLHttpRequest();
+    req.open('GET','index.php?action=notWriting');
+    req.send();
 }
 
 document.querySelector('form').addEventListener('submit', postMessage);

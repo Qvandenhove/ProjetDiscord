@@ -32,4 +32,10 @@ class MessageManager extends Manager
         $test = var_export($_SESSION['id'],true);
         echo json_encode(["status" => "success"]);
     }
+
+    public function getMessageCount($room){
+        $messageCount = $this->db->prepare('SELECT salle_chat.nom,COUNT(message) as count FROM messages JOIN salle_chat ON messages.salon = salle_chat.id WHERE salon = :room GROUP BY salon');
+        $messageCount->execute([':room' => $room]);
+        return $messageCount->fetch();
+    }
 }

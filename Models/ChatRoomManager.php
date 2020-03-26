@@ -38,4 +38,10 @@ class ChatRoomManager extends Manager
         $usersInRoom->execute([':room' => $room]);
         return $usersInRoom;
     }
+
+    public function getUserRooms($user){
+        $userRooms = $this->db->prepare('SELECT salle FROM communique WHERE utilisateur = :user');
+        $userRooms->execute([':user' => $user]);
+        return $userRooms;
+    }
 }

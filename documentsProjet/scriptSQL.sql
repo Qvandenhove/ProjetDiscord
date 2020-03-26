@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 25 mars 2020 à 14:11
+-- Généré le :  jeu. 26 mars 2020 à 13:53
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `appartient` (
-                              `utilisateur` int(11) NOT NULL,
-                              `classe` int(11) NOT NULL
+  `utilisateur` int(11) NOT NULL,
+  `classe` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `appartient` (
 
 INSERT INTO `appartient` (`utilisateur`, `classe`) VALUES
 (6, 3),
+(8, 3),
 (9, 3);
 
 -- --------------------------------------------------------
@@ -48,9 +49,9 @@ INSERT INTO `appartient` (`utilisateur`, `classe`) VALUES
 --
 
 CREATE TABLE `classe` (
-                          `id_classe` int(11) NOT NULL,
-                          `nom_classe` varchar(100) NOT NULL,
-                          `niveau_classe` varchar(50) DEFAULT NULL
+  `id_classe` int(11) NOT NULL,
+  `nom_classe` varchar(100) NOT NULL,
+  `niveau_classe` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -71,8 +72,8 @@ INSERT INTO `classe` (`id_classe`, `nom_classe`, `niveau_classe`) VALUES
 --
 
 CREATE TABLE `communique` (
-                              `utilisateur` int(11) NOT NULL,
-                              `salle` int(11) NOT NULL
+  `utilisateur` int(11) NOT NULL,
+  `salle` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -82,7 +83,9 @@ CREATE TABLE `communique` (
 INSERT INTO `communique` (`utilisateur`, `salle`) VALUES
 (6, 53),
 (6, 55),
-(9, 53);
+(6, 56),
+(9, 53),
+(9, 56);
 
 -- --------------------------------------------------------
 
@@ -91,17 +94,30 @@ INSERT INTO `communique` (`utilisateur`, `salle`) VALUES
 --
 
 CREATE TABLE `messages` (
-                            `id` int(11) NOT NULL,
-                            `salon` int(11) NOT NULL,
-                            `utilisateur` int(11) NOT NULL,
-                            `message` varchar(500) NOT NULL
+  `id` int(11) NOT NULL,
+  `salon` int(11) NOT NULL,
+  `utilisateur` int(11) NOT NULL,
+  `message` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `messages`
 --
 
-
+INSERT INTO `messages` (`id`, `salon`, `utilisateur`, `message`) VALUES
+(54, 5, 6, 'Bonjour'),
+(55, 53, 6, 'Bonjour'),
+(56, 5, 9, 'Bonjour'),
+(57, 5, 9, 'Comment va tu?'),
+(58, 53, 9, 'Bonjour'),
+(59, 53, 9, 'Ceci est un chat privé'),
+(60, 5, 6, 'Avez vous reçu mon message'),
+(61, 53, 6, 'Avez vous recu ce message privé?'),
+(62, 53, 6, 'J\'attends une réponse'),
+(63, 53, 6, 'TEST'),
+(64, 5, 6, 'test'),
+(65, 5, 6, 'TEST'),
+(66, 53, 6, 'autre TEST');
 
 -- --------------------------------------------------------
 
@@ -110,9 +126,9 @@ CREATE TABLE `messages` (
 --
 
 CREATE TABLE `salle_chat` (
-                              `id` int(11) NOT NULL,
-                              `nom` varchar(50) NOT NULL,
-                              `classe` int(50) NOT NULL
+  `id` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `classe` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -125,7 +141,8 @@ INSERT INTO `salle_chat` (`id`, `nom`, `classe`) VALUES
 (6, 'général', 9),
 (53, 'Caflers_Le-gall', 3),
 (54, 'Caflers_Le-gall', 3),
-(55, 'Caflers_Caflers', 3);
+(55, 'Caflers_Caflers', 3),
+(56, 'Caflers_Lejosne', 3);
 
 -- --------------------------------------------------------
 
@@ -134,31 +151,32 @@ INSERT INTO `salle_chat` (`id`, `nom`, `classe`) VALUES
 --
 
 CREATE TABLE `utilisateur` (
-                               `id` int(11) NOT NULL,
-                               `nom` varchar(50) DEFAULT NULL,
-                               `prenom` varchar(50) DEFAULT NULL,
-                               `mail` varchar(500) DEFAULT NULL,
-                               `est_admin` tinyint(1) NOT NULL,
-                               `est_professeur` tinyint(1) NOT NULL,
-                               `mdp` varchar(1000) DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `nom` varchar(50) DEFAULT NULL,
+  `prenom` varchar(50) DEFAULT NULL,
+  `mail` varchar(500) DEFAULT NULL,
+  `est_admin` tinyint(1) NOT NULL,
+  `est_professeur` tinyint(1) NOT NULL,
+  `isWriting` tinyint(1) NOT NULL DEFAULT 0,
+  `mdp` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `est_admin`, `est_professeur`, `mdp`) VALUES
-(1, 'Vandenhove', 'Quentin', 'quentin.vandenhove@viacesi.fr', 1, 0, '$2y$10$gTo4BhapgNxaVzqfmg7vnO/EzBIFB97NdQ7tSvscfsjztiu3GhqGe'),
-(2, 'Andrieu', 'Quentin', 'quentin.andrieu1@viacesi.fr', 1, 0, '$2y$10$PS7J0fz7DB/662q0DrjkFOIZs/EOmXA/Vf/ffoqY.MOUoq6vudDMe'),
-(6, 'Caflers', 'Frédéric', 'fcaflers@cesi.fr', 0, 1, '$2y$10$bqrX5qZMYrP39IASAzqszu3iQBuUeXjBTJyNpsdwZUvhX7LoOfKfu'),
-(7, 'Vandamme', 'Kévin', 'kevin.vandamme@viacesi.fr', 0, 0, '$2y$10$SCHOJCVYDmtMhBZj46DdQuXY7i.MNygqaQgSw4P0kBx94BXYJVOWG'),
-(8, 'Lejosne', 'Thomas', 'thomas.lejosne@viacesi.fr', 0, 0, '$2y$10$8G4LADJb.GuK7MfRUycvy.jTCytLvwid5R9.V2qqfGW4ul0TTT2N.'),
-(9, 'Le gall', 'Martin', 'martin.legall@viacesi.fr', 0, 0, '$2y$10$3j1w6LdAZfsdty1A37oVQ.PEMsPeowhyQglYRrn.YV/ozBpuKUcoO'),
-(10, 'Lancry', 'Arno', 'arno.lancry@viacesi.fr', 0, 0, '$2y$10$5mJpUxYiygFAh1pOCrrbwOjto9Il4QSusOeMfURsWXtP6ws2smRh2'),
-(13, 'Crépin', 'Benoit', 'benoit.crepin@viacesi.fr', 0, 0, '$2y$10$PZ3hOqVh5i8zhP/C8q1jbe3Tvfjy6Uqap6KPvV283ohnB1cp/e00K'),
-(14, 'Lecolier', 'Louis', 'louis.lecolier@viacesi.fr', 0, 0, '$2y$10$TbO5tx9xy22KdwbRpWn1ZuBClloblyB4RV39MdT7WLAQlb.kY3JIS'),
-(16, 'TEST', 'Prof', 'lol@mail.fr', 0, 1, '$2y$10$1fb/nt3vSKrtN3mmzyneWOKvAgDGBnBmScyutwiK46IMlNQMv6o6e'),
-(17, 'TEST', 'eleve', 'test@mail.fr', 0, 0, '$2y$10$8izJgR2fDshB727wSFNTMuyV7ViLO6wPyOJpE7F63nuUY1s65egwi');
+INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `est_admin`, `est_professeur`, `isWriting`, `mdp`) VALUES
+(1, 'Vandenhove', 'Quentin', 'quentin.vandenhove@viacesi.fr', 1, 0, 0, '$2y$10$gTo4BhapgNxaVzqfmg7vnO/EzBIFB97NdQ7tSvscfsjztiu3GhqGe'),
+(2, 'Andrieu', 'Quentin', 'quentin.andrieu1@viacesi.fr', 1, 0, 0, '$2y$10$PS7J0fz7DB/662q0DrjkFOIZs/EOmXA/Vf/ffoqY.MOUoq6vudDMe'),
+(6, 'Caflers', 'Frédéric', 'fcaflers@cesi.fr', 0, 1, 0, '$2y$10$bqrX5qZMYrP39IASAzqszu3iQBuUeXjBTJyNpsdwZUvhX7LoOfKfu'),
+(7, 'Vandamme', 'Kévin', 'kevin.vandamme@viacesi.fr', 0, 0, 0, '$2y$10$SCHOJCVYDmtMhBZj46DdQuXY7i.MNygqaQgSw4P0kBx94BXYJVOWG'),
+(8, 'Lejosne', 'Thomas', 'thomas.lejosne@viacesi.fr', 0, 0, 0, '$2y$10$8G4LADJb.GuK7MfRUycvy.jTCytLvwid5R9.V2qqfGW4ul0TTT2N.'),
+(9, 'Le gall', 'Martin', 'martin.legall@viacesi.fr', 0, 0, 1, '$2y$10$3j1w6LdAZfsdty1A37oVQ.PEMsPeowhyQglYRrn.YV/ozBpuKUcoO'),
+(10, 'Lancry', 'Arno', 'arno.lancry@viacesi.fr', 0, 0, 0, '$2y$10$5mJpUxYiygFAh1pOCrrbwOjto9Il4QSusOeMfURsWXtP6ws2smRh2'),
+(13, 'Crépin', 'Benoit', 'benoit.crepin@viacesi.fr', 0, 0, 0, '$2y$10$PZ3hOqVh5i8zhP/C8q1jbe3Tvfjy6Uqap6KPvV283ohnB1cp/e00K'),
+(14, 'Lecolier', 'Louis', 'louis.lecolier@viacesi.fr', 0, 0, 0, '$2y$10$TbO5tx9xy22KdwbRpWn1ZuBClloblyB4RV39MdT7WLAQlb.kY3JIS'),
+(16, 'TEST', 'Prof', 'lol@mail.fr', 0, 1, 0, '$2y$10$1fb/nt3vSKrtN3mmzyneWOKvAgDGBnBmScyutwiK46IMlNQMv6o6e'),
+(17, 'TEST', 'eleve', 'test@mail.fr', 0, 0, 0, '$2y$10$8izJgR2fDshB727wSFNTMuyV7ViLO6wPyOJpE7F63nuUY1s65egwi');
 
 --
 -- Index pour les tables déchargées
@@ -168,42 +186,42 @@ INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `est_admin`, `est_prof
 -- Index pour la table `appartient`
 --
 ALTER TABLE `appartient`
-    ADD PRIMARY KEY (`utilisateur`,`classe`),
-    ADD KEY `FK_Appartient_id_Classe` (`classe`);
+  ADD PRIMARY KEY (`utilisateur`,`classe`),
+  ADD KEY `FK_Appartient_id_Classe` (`classe`);
 
 --
 -- Index pour la table `classe`
 --
 ALTER TABLE `classe`
-    ADD PRIMARY KEY (`id_classe`);
+  ADD PRIMARY KEY (`id_classe`);
 
 --
 -- Index pour la table `communique`
 --
 ALTER TABLE `communique`
-    ADD PRIMARY KEY (`utilisateur`,`salle`),
-    ADD KEY `FK_Communique_id_salle_salle_chat` (`salle`);
+  ADD PRIMARY KEY (`utilisateur`,`salle`),
+  ADD KEY `FK_Communique_id_salle_salle_chat` (`salle`);
 
 --
 -- Index pour la table `messages`
 --
 ALTER TABLE `messages`
-    ADD PRIMARY KEY (`id`),
-    ADD KEY `salon_fk` (`salon`),
-    ADD KEY `utilisateur_fk` (`utilisateur`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `salon_fk` (`salon`),
+  ADD KEY `utilisateur_fk` (`utilisateur`);
 
 --
 -- Index pour la table `salle_chat`
 --
 ALTER TABLE `salle_chat`
-    ADD PRIMARY KEY (`id`),
-    ADD KEY `classe_fk` (`classe`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `classe_fk` (`classe`);
 
 --
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-    ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -213,37 +231,37 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `appartient`
 --
 ALTER TABLE `appartient`
-    MODIFY `utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `classe`
 --
 ALTER TABLE `classe`
-    MODIFY `id_classe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_classe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `communique`
 --
 ALTER TABLE `communique`
-    MODIFY `utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT pour la table `salle_chat`
 --
 ALTER TABLE `salle_chat`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Contraintes pour les tables déchargées
@@ -253,28 +271,28 @@ ALTER TABLE `utilisateur`
 -- Contraintes pour la table `appartient`
 --
 ALTER TABLE `appartient`
-    ADD CONSTRAINT `FK_Appartient_id_Classe` FOREIGN KEY (`classe`) REFERENCES `classe` (`id_classe`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `FK_Appartient_id_utilisateur_Utilisateur` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_Appartient_id_Classe` FOREIGN KEY (`classe`) REFERENCES `classe` (`id_classe`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_Appartient_id_utilisateur_Utilisateur` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `communique`
 --
 ALTER TABLE `communique`
-    ADD CONSTRAINT `FK_Communique_id_salle_salle_chat` FOREIGN KEY (`salle`) REFERENCES `salle_chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `FK_Communique_id_utilisateur_Utilisateur` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_Communique_id_salle_salle_chat` FOREIGN KEY (`salle`) REFERENCES `salle_chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_Communique_id_utilisateur_Utilisateur` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
-    ADD CONSTRAINT `salon_fk` FOREIGN KEY (`salon`) REFERENCES `salle_chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `utilisateur_fk` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `salon_fk` FOREIGN KEY (`salon`) REFERENCES `salle_chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `utilisateur_fk` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `salle_chat`
 --
 ALTER TABLE `salle_chat`
-    ADD CONSTRAINT `classe_fk` FOREIGN KEY (`classe`) REFERENCES `classe` (`id_classe`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `classe_fk` FOREIGN KEY (`classe`) REFERENCES `classe` (`id_classe`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

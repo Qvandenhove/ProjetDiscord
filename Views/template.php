@@ -46,7 +46,7 @@
                     <img src="MediaContent/Images/<?=['etudiant','professeur','admin'][$_SESSION['role']] ?>.png">
                 </a>
                 <div class="dropdown-menu disconnect" aria-labelledby="dropdownMenuLink">
-                    <a class = "dropdown-item disconnect" href="index.php?action=disconnect">Déconnexion</a>
+                    <a class = "dropdown-item mr-1 disconnect" href="index.php?action=disconnect">Déconnexion</a>
                 </div>
             </div>
             <?php endif;?>
