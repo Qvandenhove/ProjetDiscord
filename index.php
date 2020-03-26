@@ -87,6 +87,17 @@ if(!empty($_SESSION) || $action == 'connection'){
         case 'getMessages':
             getMessage();
             break;
+
+        case 'writing':
+            writeStatus($_SESSION['id']);
+            break;
+
+        case 'notWriting':
+            removeWritingStatus($_SESSION['id']);
+            break;
+        case 'getWritingStatus':
+            getWritingStatus();
+            break;
         default:
             if(!empty($_SESSION)){
                 home();

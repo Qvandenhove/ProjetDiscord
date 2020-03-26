@@ -75,12 +75,6 @@ function getChatRoom($class, $name){
     return $room;
 }
 
-function getUserClasses(){
-    $classManager = new CESI\ProjetDiscord\ClassManager();
-    $userClasses = $classManager->getUserClasses();
-    return $userClasses;
-}
-
 function getUsersInClass($class){
     $classManager = new CESI\ProjetDiscord\ClassManager();
     $usersInClass = $classManager->getUserInClass($class);
@@ -103,4 +97,19 @@ function getRoomUsers($roomName,$class){
     $roomManager = new CESI\ProjetDiscord\ChatRoomManager();
     $users = $roomManager->getUserInRoom($room);
     return $users;
+}
+
+function writeStatus($user){
+    $userManager = new CESI\ProjetDiscord\UserManager();
+    $userManager->updateWritingStatus($user);
+}
+
+function getWritingStatus(){
+    $userManager = new CESI\ProjetDiscord\UserManager();
+    $userManager->getWritingStatus();
+}
+
+function removeWritingStatus($user){
+    $userManager = new CESI\ProjetDiscord\UserManager();
+    $userManager->removeWritingStatus($user);
 }

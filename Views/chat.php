@@ -6,8 +6,14 @@ $stylesheets = ['chat']
 
 <div class="col-12 d-flex row justify-content-center section containerMessage">
     <div class="col-9 p-0 card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-around align-items-center">
+            <?php if($_GET['room'] != 'general'): ?>
+            <a href = 'index.php?action=chat&class=<?= $_GET['class']?>&room=general' class = "btn btn-primary" ><i class="fas fa-arrow-left"></i></a>
+            <?php endif; ?>
             <h1 class="text-center titleCard"><?=str_replace('-',' ',$_GET['room']) ?></h1>
+            <?php if($_GET['room'] != 'general'): ?>
+                <div></div>
+            <?php endif; ?>
         </div>
 
         <div id="contenuMessages" class="card-body boxMessages">
@@ -19,7 +25,6 @@ $stylesheets = ['chat']
                 <div class="row">
                     <input type="text" class="mt-2 p-1 inputMessage" name="message" maxlength="500" placeholder="Message" autofocus>
                     <button type="submit" class="fas fa-paper-plane mt-2 border-0 btnMessage"></button>
-                    <div id="messageEnCours" class="hidden">Est en train d'écrire</div>
                 </div>
             </form>
         </div>
@@ -30,7 +35,7 @@ $stylesheets = ['chat']
             <h3 class="titlePerson">Professeur</h3>
             <?php foreach($users as $user) :?>
                 <?php if($user['est_professeur']): ?>
-                    <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a>
+                    <div class = "d-flex flex-inline"><a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a><div data-id="<?= $user['id'] ?>" id = "" class="hidden messageEnCours">Est en train d'écrire</div></div>
                 <?php else :
                     $students[] = $user;
                 endif;
