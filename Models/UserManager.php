@@ -98,20 +98,30 @@ class UserManager extends Manager
     public function updateWritingStatus($user){
         $update = $this->db->prepare('UPDATE utilisateur SET isWriting = true WHERE id = :user');
         $update->execute([':user' => $user]);
+        $data = file_get_contents('php://input');
+
+        file_put_contents('MediaContent/userCurrentMessages/'.$_SESSION['id'].'currentMessage.json',$data);
     }
 
     public function getWritingStatus($users){
-        $commeTuVeux = [];
+        $writingStatuses = [];
         foreach ($users as $user) {
             $writingStatus = $this->db->prepare('SELECT id, isWriting FROM utilisateur WHERE id = :user');
             $writingStatus->execute([':user' => $user['id']]);
-            $commeTuVeux['user' . $user['id']] = $writingStatus->fetch();
+            $userStatus = $writingStatus->fetch();
+            if($userStatus['isWriting'] && $userStatus['id'] != $_SESSION['id']){
+                $userCurrentMessage = file_get_contents('MediaContent/userCurrentMessages/'.$user['id'].'currentMessage.json');
+                $userCurrentMessage = json_decode($userCurrentMessage,true,JSON_UNESCAPED_UNICODE);
+                $userStatus['currentMessage'] = $userCurrentMessage;
+            }
+            $writingStatuses['user' . $user['id']] = $userStatus;
         }
-        echo json_encode($commeTuVeux,JSON_UNESCAPED_UNICODE);
+        echo json_encode($writingStatuses,JSON_UNESCAPED_UNICODE);
     }
 
     public function removeWritingStatus($user){
         $update = $this->db->prepare('UPDATE utilisateur SET isWriting = false WHERE id = :user');
         $update->execute([':user' => $user]);
+        unlink('MediaContent/userCurrentMessages/'.$_SESSION['id'].'currentMessage.json');
     }
 }

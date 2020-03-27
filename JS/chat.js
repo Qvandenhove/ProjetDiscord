@@ -24,7 +24,6 @@ function getMessages() {
 
         const contenuMessages = document.getElementById('contenuMessages');
         contenuMessages.innerHTML = html;
-        contenuMessages.scrollTop = contenuMessages.scrollHeight // Permet de voir directement les messages en bas (les derniers messages)
     };
     xhr.send();
 
@@ -47,6 +46,11 @@ function getMessages() {
                         userWriting.classList.add('hidden')
                     }
                 })
+            }
+            if(response[user].currentMessage !== undefined){
+                document.getElementById('currentMessage').innerText = response[user].currentMessage.currentMessage
+            }else{
+                document.getElementById('currentMessage').innerText = ''
             }
         }
     }
@@ -87,17 +91,22 @@ const inputMessage = document.querySelector('input[name=message]');
 const messageEnCours = document.querySelectorAll('.messageEnCours');
 
 getMessages();
+setTimeout(function(){
+    document.getElementById('contenuMessages').scrollTop = contenuMessages.scrollHeight // Permet de voir directement les messages en bas (les derniers messages)
+},1000)
 
-function estEnTrainDEcrire() {
+
+
+inputMessage.addEventListener('input', function estEnTrainDEcrire(e) {
     const xhr = new XMLHttpRequest();
-    if (this.value == "" || this.value == null) {
+    let currentMessage = {currentMessage: this.value};
+    if (this.value === "" || this.value == null) {
         xhr.open('GET','index.php?action=notWriting');
         xhr.send();
     } else {
-        xhr.open('GET','index.php?action=writing');
-        xhr.send();
-    }
-}
 
-inputMessage.addEventListener('input', estEnTrainDEcrire)
+        xhr.open('POST','index.php?action=writing');
+        xhr.send(JSON.stringify(currentMessage));
+    }
+})
 

@@ -1,11 +1,40 @@
 <?php
 $students = [];
 ob_start();
-$stylesheets = ['chat']
+$stylesheets = ['chat'];
+$teachers = [];
+foreach($users as $user){
+    if($user['est_professeur']){
+        $teachers[] = $user;
+    }else{
+        $students[] = $user;
+    }
+}
+$extension = $_SESSION['role'] != 1 || sizeof($teachers) > 1 || $_GET['room'] != 'general';
 ?>
-
 <div class="col-12 d-flex row justify-content-center section containerMessage">
-    <div class="col-9 p-0 card">
+    <?php if($extension): ?>
+    <div class="col-3 p-0">
+        <div class="card-header d-flex justify-content-around align-items-center">
+            <h1 class = "titleCard">Correspondant</h1>
+        </div>
+        <div class="card-body boxMessages">
+            <?php if($_GET['room'] == 'general'):
+                foreach ($teachers as $teacher): ?>
+                <div data-id = "<?=$teacher['id'] ?>" class="col-12 mt-3 mb-1 general contenuMessage" id ="currentMessage">
+                </div>
+            <?php endforeach; else:
+                foreach ($users as $user):
+                    if($user['id'] != $_SESSION['id']):
+                    ?>
+                    <div data-id = "<?=$user['id'] ?>" class="col-12 mt-3 mb-1 prive contenuMessage" id ="currentMessage">
+                    </div>
+            <?php endif; endforeach; endif; ?>
+        </div>
+        <div class="card-footer">Voici le message de votre correspondant</div>
+    </div>
+    <?php endif ?>
+    <div class="col-<?= $extension ? 6 : 9 ?> p-0 card">
         <div class="card-header d-flex justify-content-around align-items-center">
             <?php if($_GET['room'] != 'general'): ?>
             <a href = 'index.php?action=chat&class=<?= $_GET['class']?>&room=general' class = "btn btn-primary" ><i class="fas fa-arrow-left"></i></a>
@@ -33,18 +62,14 @@ $stylesheets = ['chat']
     <div class="col-3 d-flex flex-column p-0 nav">
         <div class="professeur">
             <h3 class="titlePerson">Professeur</h3>
-            <?php foreach($users as $user) :?>
-                <?php if($user['est_professeur']): ?>
-                    <div class = "d-flex flex-inline">
-                        <div data-roomName = "<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>" data-roomNameReverse = "<?= str_replace(' ','-',$user['nom'].'_'.$_SESSION['nom'])?>" class="newMessage text-center hidden"><i class="fas fa-envelope-square"></i></div>
-                        <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$user['nom']) ?>&targetUser=<?=$user['id'] ?>" target="_blank" class="namePerson"><?= $user['nom']?> - <?= $user['prenom'] ?></a><div data-id="<?= $user['id'] ?>" id = "" class="hidden messageEnCours">
-                            Est en train d'écrire
-                        </div>
+            <?php foreach($teachers as $teacher) :?>
+                <div class = "d-flex flex-inline">
+                    <div data-roomName = "<?= str_replace(' ','-',$_SESSION['nom'].'_'.$teacher['nom']) ?>" data-roomNameReverse = "<?= str_replace(' ','-',$teacher['nom'].'_'.$_SESSION['nom'])?>" class="newMessage text-center hidden"><i class="fas fa-envelope-square"></i></div>
+                    <a href="index.php?action=chat&class=<?=$_GET['class']?>&room=<?= str_replace(' ','-',$_SESSION['nom'].'_'.$teacher['nom']) ?>&targetUser=<?=$teacher['id'] ?>" class="namePerson"><?= $teacher['nom']?> - <?= $teacher['prenom'] ?></a><div data-id="<?= $teacher['id'] ?>" id = "" class="hidden messageEnCours">
+                        Est en train d'écrire
                     </div>
-                <?php else :
-                    $students[] = $user;
-                endif;
-             endforeach;?>
+                </div>
+             <?php endforeach;?>
         </div>
         <div class="eleves d-flex flex-column">
             <h3 class="titlePerson">Étudiant</h3>
