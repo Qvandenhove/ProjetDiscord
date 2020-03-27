@@ -12,11 +12,15 @@ class MessageManager extends Manager
     }
 
     public function getMessages($room){
-        $afficherMessage = $this->db->prepare('SELECT utilisateur.nom, utilisateur.prenom, messages.message  FROM messages JOIN utilisateur ON utilisateur.id = messages.utilisateur WHERE messages.salon = :room ORDER BY messages.id desc');
+        $afficherMessage = $this->db->prepare('SELECT utilisateur.id,utilisateur.nom, utilisateur.prenom, messages.message  FROM messages JOIN utilisateur ON utilisateur.id = messages.utilisateur WHERE messages.salon = :room ORDER BY messages.id desc');
         $success = $afficherMessage->execute(array(
            ':room' => $room
         ));
-        $messages = $afficherMessage->fetchAll();
+        $messages = [];
+        while($message = $afficherMessage->fetch()){
+            $message['displaySide'] = $_SESSION['id'] == $message['id'] ? 'justify-content-end' : 'justify-content-start';
+            array_push($messages,$message);
+        }
         echo json_encode($messages);
     }
 

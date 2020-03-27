@@ -13,9 +13,11 @@ function getMessages() {
         const result = JSON.parse(this.responseText);
         const html = result.reverse().map(function (message) {
             return `
-            <div class="mt-3 mb-1 contenuMessage">
-                <p><strong> ${message.nom} - ${message.prenom}</strong></p>
-                <p>${message.message}</p>
+            <div class="conteneurMessage d-flex ${message.displaySide}" style = "width: 100%">
+                <div class="mt-3 mb-1 contenuMessage">
+                    <p><strong> ${message.nom} - ${message.prenom}</strong></p>
+                    <p>${message.message}</p>
+                </div>
             </div>
             `
         }).join('');
