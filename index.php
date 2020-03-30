@@ -89,11 +89,11 @@ if(!empty($_SESSION) || $action == 'connection'){
             break;
 
         case 'writing':
-            writeStatus($_SESSION['id']);
+            writeStatus($_SESSION['id'],$_GET['class'],$_GET['room']);
             break;
 
         case 'notWriting':
-            removeWritingStatus($_SESSION['id']);
+            removeWritingStatus($_SESSION['id'],$_GET['class'],$_GET['room']);
             break;
         case 'getWritingStatus':
             getWritingStatus($_GET['class'], $_GET['room']);

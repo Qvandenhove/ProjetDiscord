@@ -95,22 +95,24 @@ class UserManager extends Manager
         header('Location:index.php');
     }
 
-    public function updateWritingStatus($user){
+    public function updateWritingStatus($user, $class, $room){
         $update = $this->db->prepare('UPDATE utilisateur SET isWriting = true WHERE id = :user');
         $update->execute([':user' => $user]);
         $data = file_get_contents('php://input');
-
-        file_put_contents('MediaContent/userCurrentMessages/'.$_SESSION['id'].'currentMessage.json',$data);
+        if(!is_dir('MediaContent/userCurrentMessages/'.$class.'/'.$room)){
+            mkdir('MediaContent/userCurrentMessages/'.$class.'/'.$room, 0777, true);
+        }
+        file_put_contents('MediaContent/userCurrentMessages/'.$class.'/'.$room.'/'.$_SESSION['id'].'currentMessage.json',$data);
     }
 
-    public function getWritingStatus($users){
+    public function getWritingStatus($users, $class, $room){
         $writingStatuses = [];
         foreach ($users as $user) {
             $writingStatus = $this->db->prepare('SELECT id, isWriting FROM utilisateur WHERE id = :user');
             $writingStatus->execute([':user' => $user['id']]);
             $userStatus = $writingStatus->fetch();
             if($userStatus['isWriting'] && $userStatus['id'] != $_SESSION['id']){
-                $userCurrentMessage = file_get_contents('MediaContent/userCurrentMessages/'.$user['id'].'currentMessage.json');
+                $userCurrentMessage = file_get_contents('MediaContent/userCurrentMessages/'.$class.'/'.$room.'/'.$user['id'].'currentMessage.json');
                 $userCurrentMessage = json_decode($userCurrentMessage,true,JSON_UNESCAPED_UNICODE);
                 $userStatus['currentMessage'] = $userCurrentMessage;
             }
@@ -119,9 +121,9 @@ class UserManager extends Manager
         echo json_encode($writingStatuses,JSON_UNESCAPED_UNICODE);
     }
 
-    public function removeWritingStatus($user){
+    public function removeWritingStatus($user, $class, $room){
         $update = $this->db->prepare('UPDATE utilisateur SET isWriting = false WHERE id = :user');
         $update->execute([':user' => $user]);
-        unlink('MediaContent/userCurrentMessages/'.$_SESSION['id'].'currentMessage.json');
+        unlink('MediaContent/userCurrentMessages/'.$class.'/'.$room.'/'.$_SESSION['id'].'currentMessage.json');
     }
 }

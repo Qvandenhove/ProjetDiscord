@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 26 mars 2020 à 13:53
+-- Généré le :  lun. 30 mars 2020 à 11:56
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -84,8 +84,11 @@ INSERT INTO `communique` (`utilisateur`, `salle`) VALUES
 (6, 53),
 (6, 55),
 (6, 56),
+(8, 57),
 (9, 53),
-(9, 56);
+(9, 56),
+(9, 57),
+(9, 58);
 
 -- --------------------------------------------------------
 
@@ -117,7 +120,12 @@ INSERT INTO `messages` (`id`, `salon`, `utilisateur`, `message`) VALUES
 (63, 53, 6, 'TEST'),
 (64, 5, 6, 'test'),
 (65, 5, 6, 'TEST'),
-(66, 53, 6, 'autre TEST');
+(66, 53, 6, 'autre TEST'),
+(67, 53, 6, 'TEST'),
+(68, 53, 9, 'Bonjour'),
+(69, 5, 9, 'TEST'),
+(70, 5, 9, 'TESTONS LE CHAT A GUAUCHE'),
+(71, 53, 9, 'TESTONS LE CHAT A GUAUCHE');
 
 -- --------------------------------------------------------
 
@@ -142,7 +150,9 @@ INSERT INTO `salle_chat` (`id`, `nom`, `classe`) VALUES
 (53, 'Caflers_Le-gall', 3),
 (54, 'Caflers_Le-gall', 3),
 (55, 'Caflers_Caflers', 3),
-(56, 'Caflers_Lejosne', 3);
+(56, 'Caflers_Lejosne', 3),
+(57, 'Le-gall_Lejosne', 3),
+(58, 'Le-gall_Le-gall', 3);
 
 -- --------------------------------------------------------
 
@@ -249,13 +259,13 @@ ALTER TABLE `communique`
 -- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT pour la table `salle_chat`
 --
 ALTER TABLE `salle_chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
