@@ -99,9 +99,9 @@ function getRoomUsers($roomName,$class){
     return $users;
 }
 
-function writeStatus($user){
+function writeStatus($user, $class, $room){
     $userManager = new CESI\ProjetDiscord\UserManager();
-    $userManager->updateWritingStatus($user);
+    $userManager->updateWritingStatus($user, $class, $room);
 }
 
 function getWritingStatus($class, $room){
@@ -111,12 +111,12 @@ function getWritingStatus($class, $room){
         $users = getTeacherInClass($class);
     }
     $userManager = new CESI\ProjetDiscord\UserManager();
-    $userManager->getWritingStatus($users->fetchAll());
+    $userManager->getWritingStatus($users->fetchAll(), $class, $room);
 }
 
-function removeWritingStatus($user){
+function removeWritingStatus($user, $class, $room){
     $userManager = new CESI\ProjetDiscord\UserManager();
-    $userManager->removeWritingStatus($user);
+    $userManager->removeWritingStatus($user, $class, $room);
 }
 
 function getUserRooms($user){

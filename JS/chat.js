@@ -2,7 +2,9 @@ let userClass = document.location.href.split('=')[2].split('&')[0];
 let chatRoom = document.location.href.split('=')[3].split('&')[0]
 let finClassNumber = userClass.indexOf('&');
 
-
+let resetWriting = new XMLHttpRequest();
+resetWriting.open('GET','index.php?action=notWriting&class=' + userClass + '&room=' +  chatRoom);
+resetWriting.send();
 
 function getMessages() {
 
@@ -13,16 +15,17 @@ function getMessages() {
         const result = JSON.parse(this.responseText);
         const html = result.reverse().map(function (message) {
             return `
-            <div class="mt-3 mb-1 contenuMessage">
-                <p><strong> ${message.nom} - ${message.prenom}</strong></p>
-                <p>${message.message}</p>
+            <div class="conteneurMessage d-flex ${message.displaySide}" style = "width: 100%">
+                <div class="mt-3 mb-1 contenuMessage">
+                    <p><strong> ${message.nom} - ${message.prenom}</strong></p>
+                    <p>${message.message}</p>
+                </div>
             </div>
             `
         }).join('');
 
         const contenuMessages = document.getElementById('contenuMessages');
         contenuMessages.innerHTML = html;
-        contenuMessages.scrollTop = contenuMessages.scrollHeight // Permet de voir directement les messages en bas (les derniers messages)
     };
     xhr.send();
 
@@ -32,7 +35,10 @@ function getMessages() {
     req.open('GET', 'index.php?action=getWritingStatus&room=' + chatRoom + '&class=' + userClass);
     req.onload = function(){
         let response = JSON.parse(this.responseText);
+        let currentMessageshown = false;
+
         for (user in response) {
+
             if(response[user].isWriting === '1'){
                 messageEnCours.forEach(function(userWriting) {
                     if (response[user].id === userWriting.dataset.id) {
@@ -45,6 +51,12 @@ function getMessages() {
                         userWriting.classList.add('hidden')
                     }
                 })
+            }
+            if(response[user].currentMessage !== undefined){
+                currentMessageshown = true;
+                document.getElementById('currentMessage').innerText = response[user].currentMessage.currentMessage;
+            }else if(!currentMessageshown){
+                document.getElementById('currentMessage').innerText = ''
             }
         }
     }
@@ -85,17 +97,21 @@ const inputMessage = document.querySelector('input[name=message]');
 const messageEnCours = document.querySelectorAll('.messageEnCours');
 
 getMessages();
+setTimeout(function(){
+    document.getElementById('contenuMessages').scrollTop = contenuMessages.scrollHeight // Permet de voir directement les messages en bas (les derniers messages)
+},1000);
 
-function estEnTrainDEcrire() {
+
+
+inputMessage.addEventListener('input', function estEnTrainDEcrire(e) {
     const xhr = new XMLHttpRequest();
-    if (this.value == "" || this.value == null) {
-        xhr.open('GET','index.php?action=notWriting');
+    let currentMessage = {currentMessage: this.value};
+    if (this.value === "" || this.value == null) {
+        xhr.open('GET','index.php?action=notWriting&class=' + userClass + '&room=' +  chatRoom);
         xhr.send();
     } else {
-        xhr.open('GET','index.php?action=writing');
-        xhr.send();
+        xhr.open('POST','index.php?action=writing&class=' + userClass +'&room=' +  chatRoom);
+        xhr.send(JSON.stringify(currentMessage));
     }
-}
-
-inputMessage.addEventListener('input', estEnTrainDEcrire)
+});
 
