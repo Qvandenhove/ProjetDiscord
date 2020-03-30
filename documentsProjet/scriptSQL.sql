@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 30 mars 2020 à 11:56
+-- Généré le :  lun. 30 mars 2020 à 11:59
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -102,30 +102,6 @@ CREATE TABLE `messages` (
   `utilisateur` int(11) NOT NULL,
   `message` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `messages`
---
-
-INSERT INTO `messages` (`id`, `salon`, `utilisateur`, `message`) VALUES
-(54, 5, 6, 'Bonjour'),
-(55, 53, 6, 'Bonjour'),
-(56, 5, 9, 'Bonjour'),
-(57, 5, 9, 'Comment va tu?'),
-(58, 53, 9, 'Bonjour'),
-(59, 53, 9, 'Ceci est un chat privé'),
-(60, 5, 6, 'Avez vous reçu mon message'),
-(61, 53, 6, 'Avez vous recu ce message privé?'),
-(62, 53, 6, 'J\'attends une réponse'),
-(63, 53, 6, 'TEST'),
-(64, 5, 6, 'test'),
-(65, 5, 6, 'TEST'),
-(66, 53, 6, 'autre TEST'),
-(67, 53, 6, 'TEST'),
-(68, 53, 9, 'Bonjour'),
-(69, 5, 9, 'TEST'),
-(70, 5, 9, 'TESTONS LE CHAT A GUAUCHE'),
-(71, 53, 9, 'TESTONS LE CHAT A GUAUCHE');
 
 -- --------------------------------------------------------
 
